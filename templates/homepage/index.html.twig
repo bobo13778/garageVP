@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+Accueil
+{% endblock %}
+
+{% block body %}
+  <div class="row garage-picture justify-content-center align-items-center">
+    Garage V. PARROT
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-8">
+    {% for service in services %}
+      <p>
+        {{service.name}}
+        {{service.description}}
+      </p>
+    {% endfor %}
+    </div>
+    <div class="col-12 col-md-4">
+      <div>Temoignages</div>
+      <div>Formulaire tépmoignage</div>
+    </div>
+  </div>
+{% endblock %}

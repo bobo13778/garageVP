@@ -1,0 +1,39 @@
+body {
+  font-family: 'Heebo';
+  background-color: #F2F2F2;
+}
+
+h1, h2, h3 {
+  font-family: 'Arvo';
+}
+
+.medium-green {
+  background-color : #7AE582;
+}
+
+.deep-green {
+  background-color : #25A18E;
+}
+
+.light-green {
+  background-color : #85FDBC;
+}
+
+.link {
+  font-family: 'Heebo';
+  color : #85FDBC;
+}
+
+.btn {
+  background-color: #25A18E;
+  color: #F2F2F2;
+}
+
+.garage-picture {
+    background-image: url(./Images/garage.jpg);
+    height : 400px;
+    background-position: center;
+    background-size: cover;
+    color:#7AE582;
+    font-family: 'Arvo';
+}
