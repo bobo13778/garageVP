@@ -13,8 +13,14 @@ class HomePageController extends AbstractController
     public function index(): Response
     {   $serviceModel = new Service;
         $services = $serviceModel->findAll();
+        if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
+            $auth = $_SESSION['Auth'];
+        } else {
+            $auth = '';
+        }
         return $this->render('homepage/index.html.twig', [
-            'services' => $services
+            'services' => $services,
+            'auth' => $auth
         ]);
     }
 }

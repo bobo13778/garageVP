@@ -11,8 +11,17 @@ class AdminPageController extends AbstractController
     #[Route('/admin', name: 'app_admin_page')]
     public function index(): Response
     {
+        if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
+            $auth = $_SESSION['Auth'];
+        } else {
+            $auth = '';
+        }
+        if($auth !== 'admin') {
+            header('location:./');
+            exit();
+        }
         return $this->render('admin_page/index.html.twig', [
-            'controller_name' => 'AdminPageController',
+            'auth' => $auth,
         ]);
     }
 }

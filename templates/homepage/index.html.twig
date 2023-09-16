@@ -1,12 +1,15 @@
 {% extends "base.html.twig" %}
 
+{% set userRole = auth %}
+
 {% block title %}
 Accueil
 {% endblock %}
 
 {% block body %}
-  <div class="row garage-picture justify-content-center align-items-center">
-    Garage V. PARROT
+{{parent()}}
+  <div class="row garage-picture text-center align-items-center">
+    <h1>Garage V. PARROT</h1>
   </div>
   <div class="row">
     <div class="col-12 col-md-8">
