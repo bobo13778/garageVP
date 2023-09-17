@@ -4,7 +4,7 @@ namespace App\Model;
 
 use App\db\Db;
 
-class model extends Db
+class Model extends Db
 {
   protected $table;
   private $db;

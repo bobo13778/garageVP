@@ -11,17 +11,32 @@ Accueil
   <div class="row garage-picture text-center align-items-center">
     <h1>Garage V. PARROT</h1>
   </div>
-  <div class="row">
+  <div class="row mt-2">
     <div class="col-12 col-md-8">
-    {% for service in services %}
-      <p>
-        {{service.name}}
-        {{service.description}}
-      </p>
-    {% endfor %}
+      <h2>Nos services</h2>
+      {% for service in services %}
+        <div class="row mb-2 shadow">
+          <img class="img-fluid col-12 col-md-4" src ={{service.picture}} alt={{service.name}}/>
+          <div class="col-12 col-md-8">
+            <h3>{{service.name}}</h2>
+            <p>{{service.description}}</p>
+          </div>
+        </div>
+      {% endfor %}
     </div>
     <div class="col-12 col-md-4">
-      <div>Temoignages</div>
+      <h3>Nos clients parlent de nous</h3>
+      {% for testimony in testimonies %}
+        <div class="row mb-2 shadow">
+          <div class="row">
+            <p class="col-6"><strong>{{testimony.name}}</strong></p>
+            <p class="col-6 text-center">{{testimony.grade}}</p>
+          </div>
+          <div class="col-12 col-md-8">
+            <p>{{testimony.content}}</p>
+          </div>
+        </div>
+      {% endfor %}
       <div>Formulaire tépmoignage</div>
     </div>
   </div>

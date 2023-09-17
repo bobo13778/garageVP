@@ -7,6 +7,7 @@ class Service  extends Model
   protected int $id;
   protected string $name;
   protected string $description;
+  protected string $picture;
 
   public function __construct()
   {
@@ -30,6 +31,11 @@ class Service  extends Model
   public function getDescription() : string {
     return $this->description;
   }
+  
+  public function getPicture() : string {
+    return $this->picture;
+  }
+
 
   public function setId(int $id) : void {
     $this->id = $id;
@@ -41,6 +47,10 @@ class Service  extends Model
 
   public function setDescription(string $description) : void {
     $this->description = $description;
+  }
+
+  public function setPicture(string $picture) : void {
+    $this->picture = $picture;
   }
 
 }

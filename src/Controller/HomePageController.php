@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\Service;
+use App\Model\Temoignage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,6 +14,8 @@ class HomePageController extends AbstractController
     public function index(): Response
     {   $serviceModel = new Service;
         $services = $serviceModel->findAll();
+        $testimonyModel = new Temoignage;
+        $testimonies = $testimonyModel->findAll();
         if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
             $auth = $_SESSION['Auth'];
         } else {
@@ -20,6 +23,7 @@ class HomePageController extends AbstractController
         }
         return $this->render('homepage/index.html.twig', [
             'services' => $services,
+            'testimonies' => $testimonies,
             'auth' => $auth
         ]);
     }
