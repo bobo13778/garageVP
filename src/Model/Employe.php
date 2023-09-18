@@ -10,7 +10,7 @@ class Employe extends Model
     protected string $email;
     protected string $password;
     protected bool $moderator;
-    protected int $posteId;
+    protected string $poste;
 
     public function __construct()
     {
@@ -68,9 +68,9 @@ class Employe extends Model
         return $this->moderator;
     }
 
-    public function getPosteId(): int
+    public function getPoste(): string
     {
-        return $this->posteId;
+        return $this->poste;
     }
 
     public function setId(int $id): void
@@ -103,9 +103,9 @@ class Employe extends Model
         $this->moderator = $moderator;
     }
     
-    public function setPosteId(int $posteId): void
+    public function setPoste(int $poste): void
     {
-        $this->posteId = $posteId;
+        $this->poste = $poste;
     }
 
 }
