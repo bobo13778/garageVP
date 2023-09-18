@@ -3,10 +3,167 @@
 {% set userRole = auth %}
 
 {% block title %}
-    Emplyoyé
+    Employé
 {% endblock %}
 
 {% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <h2>Témoignages</h2>
+            <div>
+                <button id="toValidateBtn" class="btn" onclick="buttonClicked('ToValidate')" disabled>A valider</button>
+                <button id="newBtn" class="btn" onclick="buttonClicked('New')">Nouveau</button>
+                <button id="publishedBtn" class="btn" onclick="buttonClicked('Published')">Publiés</button>
+            </div>
+            <div id="toValidate" class="col-12 col-md-4">
+                {% for testimony in testimonies %}
+                    {% if testimony.toValidate == 'true' %}
+                        <div class="shadow pt-2 pb-2 mb-2">
+                            <div class="row ps-2">
+                                <span>
+                                    <strong>Nom : </strong>{{testimony.name}}
+                                </span></br>
+                                <span>
+                                    <strong>Message : </strong>{{testimony.content}}
+                                </span></br>
+                                <span>
+                                    <strong>Note : </strong>{{testimony.grade}}
+                                </span>
+                            </div>
+                            <div class="row justify-content-around mt-3 mb-3">
+                                <a href="" class="btn col-3">Refuser</a>
+                                <a href="" class="btn col-3">Publier</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <div id="new" class="col-12 col-md-4 d-none">
+
+            </div>
+
+            <div id="published" class="col-12 col-md-3 d-none">
+                {% for testimony in testimonies %}
+                    {% if testimony.toValidate == 'false' %}
+                        <div class="shadow pt-2 pb-2 mb-2">
+                            <div class="row ps-2">
+                                <span>
+                                    <strong>Nom : </strong>{{testimony.name}}
+                                </span></br>
+                                            <span>
+                                    <strong>Message : </strong>{{testimony.content}}
+                                </span></br>
+                                <span>
+                                    <strong>Note : </strong>{{testimony.grade}}
+                                </span>
+                            </div>
+                            <div class="row justify-content-around mt-3 mb-3">
+                                <a href="" class="btn col-3">Supprimer</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <h2>Annonces</h2>
+            <div>
+                <button id="NewAnnounceBtn" class="btn" onclick="buttonClicked('NewAnnounce')">Nouveau</button>
+            </div>
+            <div id="announceList">
+                {% for vehicule in vehicules %}
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src={{vehicule.mainPicture}} alt="Photo"/>
+                        <div class="card-body">
+                            <h5 class="card-title">{{vehicule.title}}</h5>
+                            <p class="card-text">
+                                <span>Année : {{vehicule.year}}</span></br>
+                                <span>{{vehicule.fuel}}</span></br>
+                                <span>{{vehicule.mileage}} km</span></br>
+                                <span><strong>{{vehicule.price}} €</strong></span>
+                            </p>
+                            <div>
+                                <a href="" class ="btn">Modifier</a>
+                                <a href="" class ="btn">Supprimer</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div id="newAnnounce">
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    function buttonClicked(title) {
+        let btnToValidate = document.getElementById('toValidateBtn');
+        let btnNew = document.getElementById('newBtn');
+        let btnPublished = document.getElementById('publishedBtn');
+        let sectionToValidate = document.getElementById('toValidate');
+        let sectionNew = document.getElementById('new');
+        let sectionPublished = document.getElementById('published');
+
+        switch (title) {
+            case 'ToValidate' :
+                btnToValidate.setAttribute('disabled', '');
+                btnNew.removeAttribute('disabled');
+                btnPublished.removeAttribute('disabled');
+                if(sectionToValidate.classList.contains('d-none')) {
+                    sectionToValidate.classList.remove('d-none');
+                }
+                if(!sectionNew.classList.contains('d-none')) {
+                    sectionNew.classList.add('d-none');
+                }
+                if(!sectionPublished.classList.contains('d-none')) {
+                    sectionPublished.classList.add('d-none');
+                }
+                break;
+
+            case 'New' :
+                btnToValidate.removeAttribute('disabled');
+                btnNew.setAttribute('disabled', '');
+                btnPublished.removeAttribute('disabled');
+                if(!sectionToValidate.classList.contains('d-none')) {
+                    sectionToValidate.classList.add('d-none');
+                }
+                if(sectionNew.classList.contains('d-none')) {
+                    sectionNew.classList.remove('d-none');
+                }
+                if(!sectionPublished.classList.contains('d-none')) {
+                    sectionPublished.classList.add('d-none');
+                }
+                break;
+
+            case 'Published' :
+                btnToValidate.removeAttribute('disabled');
+                btnNew.removeAttribute('disabled');
+                btnPublished.setAttribute('disabled', '');
+                if(!sectionToValidate.classList.contains('d-none')) {
+                    sectionToValidate.classList.add('d-none');
+                }
+                if(!sectionNew.classList.contains('d-none')) {
+                    sectionNew.classList.add('d-none');
+                }
+                if(sectionPublished.classList.contains('d-none')) {
+                    sectionPublished.classList.remove('d-none');
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
+</script>
+
     tépmoignages
     A valider
     Nouveau

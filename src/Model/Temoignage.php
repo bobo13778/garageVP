@@ -8,6 +8,7 @@ class Temoignage  extends Model
   protected string $name;
   protected string $content;
   protected int $grade;
+  protected bool $toValidate;
 
   public function __construct()
   {
@@ -36,6 +37,10 @@ class Temoignage  extends Model
     return $this->grade;
   }
 
+  public function getTovalidate() : bool {
+    return $this->toValidate;
+  }
+
   public function setId(int $id) : void {
     $this->id = $id;
   }
@@ -51,5 +56,10 @@ class Temoignage  extends Model
   public function setGrade(int $grade) : void {
     $this->grade = $grade;
   }
+
+  public function setToValidate(int $toValidate) : void {
+    $this->toValidate = $toValidate;
+  }
+
 
 }

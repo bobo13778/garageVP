@@ -20,6 +20,7 @@ class AdminPageController extends AbstractController
         $services = $serviceModel->findAll();
         $scheduleModel = new Horaire;
         $schedules = $scheduleModel->findAll();
+        
         if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
             $auth = $_SESSION['Auth'];
         } else {
