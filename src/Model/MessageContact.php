@@ -9,11 +9,13 @@ class MessageContact extends Model
     protected string $lastname;
     protected string $email;
     protected string $phoneNumber;
+    protected string $subject;
     protected string $message;
+    protected string $createdAt;
 
     public function __construct()
     {
-        $this->table = 'contacts';
+        $this->table = 'messagecontacts';
 
     }
 
@@ -47,9 +49,19 @@ class MessageContact extends Model
         return $this->phoneNumber;
     }
 
-    public function getMessage(): int
+    public function getSubject(): string
+    {
+        return $this->subject;
+    }
+
+    public function getMessage(): string
     {
         return $this->message;
+    }
+
+    public function getCreatedAt(): string
+    {
+        return $this->createdAt;
     }
 
     public function setId(int $id): void
@@ -77,10 +89,19 @@ class MessageContact extends Model
         $this->phoneNumber = $phoneNumber;
     }
     
-    public function setMessage(int $message): void
+    public function setSubject(string $subject): void
+    {
+        $this->subject = $subject;
+    }
+
+    public function setMessage(string $message): void
     {
         $this->message = $message;
     }
 
+    public function setCreatedAt(): void
+    {
+        $this->createdAt = date("Y-m-d H:i:s");
+    }
 
 }

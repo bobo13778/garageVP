@@ -9,6 +9,7 @@ class Temoignage  extends Model
   protected string $content;
   protected int $grade;
   protected bool $toValidate;
+  protected string $createdAt;
 
   public function __construct()
   {
@@ -41,6 +42,10 @@ class Temoignage  extends Model
     return $this->toValidate;
   }
 
+  public function getCreatedAt() : string {
+    return $this->createdAt;
+  }
+
   public function setId(int $id) : void {
     $this->id = $id;
   }
@@ -61,5 +66,8 @@ class Temoignage  extends Model
     $this->toValidate = $toValidate;
   }
 
+  public function setCreatedAt(int $toValidate) : void {
+    $this->createdAt = date("Y-m-d H:i:s");
+  }
 
 }

@@ -18,7 +18,10 @@ class EmployeePageController extends AbstractController
         $testimonies = $testimonyModel->findAll();
         $vehiculeModel = new Vehicule;
         $vehicules = $vehiculeModel->findAll();
-
+        foreach($testimonies as $key => $testimony) {
+            $testimonies[$key]['date'] = date("d/m/Y", strtotime($testimony['createdAt']));
+            $testimonies[$key]['time'] = date("H:m", strtotime($testimony['createdAt']));
+        }
         if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
             $auth = $_SESSION['Auth'];
         } else {

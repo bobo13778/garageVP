@@ -6,5 +6,45 @@
     Contact
 {% endblock %}
 {% block body %}
-    Formulaire de contact
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <h2>Nous contacter</h2>
+                <form class="container-fluid" method="POST" action="./contact/submit">
+                    <div class="row">
+                        <div class="form-group col-12 col-md-6 mb-3">
+                            <label for="firstname"><h4>Prénom</h4></label>
+                            <input type="text" class="form-control" id="firstname" name="firstname" required/>
+                        </div>
+                        <div class="form-group col-12 col-md-6 mb-3">
+                            <label for="lastname"><h4>Nom</h4></label>
+                            <input type="text" class="form-control" id="lastname" name="lastname" required/>
+                        </div>
+                        <div class="form-group col-12 col-md-8 mb-3">
+                            <label for="email"><h4>Email</h4></label>
+                            <input type="email" class="form-control" id="email" name="email" required/>
+                        </div>
+                        <div class="form-group col-12 col-md-8 mb-3">
+                            <label for="phoneNumber"><h4>Numéro de téléphone</h4></label>
+                            <input type="phone" class="form-control" id="phoneNumber" name="phoneNumber" required/>
+                        </div>
+                        <div class="form-group col-12 col-md-8 mb-3">
+                            <label for="subject"><h4>Objet</h4></label>
+                            {% if title == 'simple' %}
+                                <input type="text" class="form-control" id="subject" name="subject" required/>
+                            {% else %}
+                                <input type="text" class="form-control" id="subject" name="subject" required placeholder={{title}}/>
+                            {% endif %}
+                        </div>
+                        <div class="form-group col-12 col-md-12">
+                            <label for="message"><h4>Votre message</h4></label>
+                            <textarea class="form-control" id="message" name="message" required rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn mt-3 mb-3 col-3 col-md-2">Envoyer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

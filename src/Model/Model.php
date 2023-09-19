@@ -108,6 +108,10 @@ class Model extends Db
         $this->$method($value);
       }
     }
+    if (method_exists($this, 'setCreatedAt')){
+      $method = 'setCreatedAt';
+      $this->$method();
+    }
     return $this;
   }
 }
