@@ -1,4 +1,4 @@
-        <form class="container-fluid" method="POST" action="./admin/submitservice">
+        <form class="container-fluid" method="POST" action="./admin/submitservice" enctype="multipart/form-data">
           <div class="row">
               <div class="form-group col-12 col-md-6 mb-3">
                   <label for="name"><h4>Titre</h4></label>
@@ -8,9 +8,9 @@
                   <label for="description"><h4>Description</h4></label>
                   <textarea class="form-control" id="description" name="description" required col="3"/></textarea>
               </div>
-              <div class="form-group col-12 col-md-6 mb-3">
-                  <label for="picture"><h4>Image</h4></label>
-                  <input type="picture" class="form-control" id="picture" name="picture" required/>
+              <div class="custom-file col-12 col-md-6 mb-3">
+                    <label for="picture" class="custom-file-label"><h4>Image</h4></label>
+                    <input type="file" class="custom-file-input" id="picture" name="picture" required/>
               </div>
               
               <button type="submit" class="btn mt-3 mb-3 col-3">Envoyer</button>

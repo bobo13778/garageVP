@@ -152,6 +152,11 @@ class AdminPageController extends AbstractController
     {   
         if(isset($_POST) && !empty($_POST)) {
             $service = new Service();
+            $filename = $_FILES['picture']['tmp_name'];
+            $nameToRegister = './Images/services/'.$_FILES['picture']['name'];
+            $_POST['picture'] = '/Images/services/'.$_FILES['picture']['name'];
+            move_uploaded_file($filename, $nameToRegister);
+
             $service = $service->hydrate($_POST);
             $service->create($service);
             header("location:./?servicecreated=true");
@@ -210,6 +215,11 @@ class AdminPageController extends AbstractController
             $idServiceToModify = (int)$_POST['idServiceToModify'];
             unset($_POST['idServiceToModify']);
             $serviceModel = new Service();
+            $filename = $_FILES['picture']['tmp_name'];
+            $nameToRegister = './Images/services/'.$_FILES['picture']['name'];
+            $_POST['picture'] = '/Images/services/'.$_FILES['picture']['name'];
+            move_uploaded_file($filename, $nameToRegister);
+
             $serviceDatas = $serviceModel->hydrate($_POST);
             $serviceModel->update($idServiceToModify, $serviceDatas);
             header("location:./?servicemodified=true");
