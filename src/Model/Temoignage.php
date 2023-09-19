@@ -62,11 +62,11 @@ class Temoignage  extends Model
     $this->grade = $grade;
   }
 
-  public function setToValidate(int $toValidate) : void {
+  public function setToValidate(bool $toValidate) : void {
     $this->toValidate = $toValidate;
   }
 
-  public function setCreatedAt(int $toValidate) : void {
+  public function setCreatedAt() : void {
     $this->createdAt = date("Y-m-d H:i:s");
   }
 

@@ -10,9 +10,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomePageController extends AbstractController
 {
-    #[Route('/', name: 'home')]
+    #[Route('/', name: 'home', methods:['GET'])]
     public function index(): Response
-    {   $serviceModel = new Service;
+    {   
+        if(isset($_GET['sent']) && $_GET['sent']){
+            echo'<script>alert(\'Merci pour votre temoignage\')</script>';
+        }
+        
+        $serviceModel = new Service;
         $services = $serviceModel->findAll();
         $testimonyModel = new Temoignage;
         $testimonies = $testimonyModel->findAll();
@@ -28,6 +33,29 @@ class HomePageController extends AbstractController
         return $this->render('homepage/index.html.twig', [
             'services' => $services,
             'testimonies' => $testimonies,
+            'auth' => $auth
+        ]);
+    }
+
+    #[Route('/submit', name: 'home_post', methods:['POST'])]
+    public function record() : Response
+    {   
+        if(isset($_POST) && !empty($_POST)) {
+            $testimony = new Temoignage();
+            $testimony = $testimony->hydrate($_POST);
+            $testimony->create($testimony);
+            var_dump($_POST);
+            header("location:./?sent=true");
+            exit();
+
+        }
+        if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
+            $auth = $_SESSION['Auth'];
+        } else {
+            $auth = '';
+        }
+
+        return $this->render('homepage/index.html.twig', [
             'auth' => $auth
         ]);
     }

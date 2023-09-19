@@ -11,8 +11,11 @@ class DisconnectController extends AbstractController
     #[Route('/deconnexion', name: 'app_disconnect')]
     public function index(): Response
     {
-      session_unset();
-      session_destroy();
+      if (session_status() != PHP_SESSION_NONE) {
+        session_unset();
+        session_destroy();
+      }
+     
       header("location: ./");
       exit();
     }

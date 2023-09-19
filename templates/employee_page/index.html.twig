@@ -18,7 +18,7 @@
             </div>
             <div id="toValidate" class="col-12 col-md-4">
                 {% for testimony in testimonies %}
-                    {% if testimony.toValidate == 'true' %}
+                    {% if testimony.toValidate == '1' %}
                         <div class="shadow pt-2 pb-2 mb-2">
                             <div class="row ps-2">
                                 <span>
@@ -35,8 +35,8 @@
                                 </span>
                             </div>
                             <div class="row justify-content-around mt-3 mb-3">
-                                <a href="" class="btn col-3">Refuser</a>
-                                <a href="" class="btn col-3">Publier</a>
+                                <a href="./employe/deletetestimony?id={{testimony.id}}" class="btn col-3">Refuser</a>
+                                <a href="./employe/validatetestimony?id={{testimony.id}}" class="btn col-3">Publier</a>
                             </div>
                         </div>
                     {% endif %}
@@ -44,12 +44,12 @@
             </div>
 
             <div id="new" class="col-12 col-md-4 d-none">
-
+                    {% include './employee_page/_form_testimony.html.twig' %}
             </div>
 
             <div id="published" class="col-12 col-md-3 d-none">
                 {% for testimony in testimonies %}
-                    {% if testimony.toValidate == 'false' %}
+                    {% if testimony.toValidate != '1' %}
                         <div class="shadow pt-2 pb-2 mb-2">
                             <div class="row ps-2">
                                 <span>
@@ -66,7 +66,7 @@
                                 </span>
                             </div>
                             <div class="row justify-content-around mt-3 mb-3">
-                                <a href="" class="btn col-3">Supprimer</a>
+                                <a href="./employe/deletetestimony?id={{testimony.id}}" class="btn col-3">Supprimer</a>
                             </div>
                         </div>
                     {% endif %}
