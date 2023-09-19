@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EmployeePageController extends AbstractController
 {
+    //Affichage page
     #[Route('/employe', name: 'app_employee_page', methods:['GET'])]
     public function index(): Response
     {
@@ -63,7 +64,7 @@ class EmployeePageController extends AbstractController
             'vehicules' => $vehicules
          ]);
     }
-
+    //gestion de la création d'un témoignage
     #[Route('/employe/submittestimony', name: 'app_employee_addtestimony_page', methods:['POST'])]
     public function newTestimony() : Response
     {   
@@ -86,7 +87,7 @@ class EmployeePageController extends AbstractController
             'auth' => $auth,
          ]);
     }
-
+    //gestion de la suppression ou du refus d'un témoignage
     #[Route('/employe/deletetestimony', name: 'app_employee_deletetestimony_page', methods:['GET'])]
     public function deleteTestimony() : Response
     {   
@@ -107,7 +108,7 @@ class EmployeePageController extends AbstractController
             'auth' => $auth,
          ]);
     }
-
+    //gestion de la validation d'un témoignage
     #[Route('/employe/validatetestimony', name: 'app_employee_validatetestimony_page', methods:['GET'])]
     public function validateTestimony() : Response
     {   

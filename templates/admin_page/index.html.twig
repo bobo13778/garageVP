@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block body %}
+
 <div class="d-md-none">
     <h2 id="mainTitle">Employés</h2>
     <div>
@@ -15,16 +16,33 @@
         <button id="scheduleBtn" class="btn" onclick="buttonClicked('Horaires')">Horaires</button>
     </div>
 </div>
+
 <div class="container-fluid">
     <div class="row w-100">
+
+        <div id="employeeCreateForm" class="col-12 col-md-4 d-none">
+            <div class="row justify-content-around mt-3 mb-3">
+                <a class="btn col-3" href="./admin">Annuler</a>
+            </div>
+            {% include './admin_page/_form_add_employee.html.twig' %}
+        </div>
+
         <div id="employee" class="col-12 col-md-4 d-md-block">
             <h2 class="text-center d-none d-md-block">Employés</h2>
             <div class="row justify-content-around mt-3 mb-3">
-                <a href="" class="btn col-3">Nouveau</a>
+                <button id="employeeCreateBtn" class="btn col-3" onclick="buttonCreateEmployee()">Nouveau</button>
             </div>
             {% for employee in employees %}
-                <div class="shadow pt-2 pb-2 mb-2">
-                    <div class="row ps-2">
+
+                <div id="employeeModifyForm{{employee.id}}" class="shadow pt-2 pb-2 mb-2 d-none">
+                    <div class="row justify-content-around mt-3 mb-3">
+                        <a class="btn col-3" href="./admin">Annuler</a>
+                    </div>
+                    {% include './admin_page/_form_modify_employee.html.twig' with {'employee' : employee} %}
+                </div>
+
+                <div id="employeeDisplay{{employee.id}}" class="shadow pt-2 pb-2 mb-2">
+                      <div class="row ps-2">
                         <span>
                             <strong>Nom : </strong>{{employee.firstname}} {{employee.lastname}}
                         </span></br>
@@ -44,8 +62,8 @@
                         </span>
                     </div>
                     <div class="row justify-content-around mt-3 mb-3">
-                        <a href="" class="btn col-3">Modifier</a>
-                        <a href="" class="btn col-3">Supprimer</a>
+                        <button id="modifyEmployeeBtn" onclick="buttonModifyEmployee({{employee.id}})" class="btn col-3">Modifier</button>
+                        <a href="./admin/deleteemployee?id={{employee.id}}" class="btn col-3">Supprimer</a>
                     </div>
                 </div>
             {% endfor %}
@@ -125,20 +143,26 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 {% endblock %}
 
 {% block javascripts %}
 <script>
+
     function buttonClicked(title) {
         let btnEmployee = document.getElementById('employeeBtn');
         let btnService = document.getElementById('serviceBtn');
         let btnSchedule = document.getElementById('scheduleBtn');
+
+
         let mainTitle = document.getElementById('mainTitle');
+
         let sectionEmployee = document.getElementById('employee');
         let sectionServices = document.getElementById('services');
         let sectionSchedule = document.getElementById('schedule');
+
         mainTitle.innerText = title;
 
         switch (title) {
@@ -191,5 +215,40 @@
                 break;
         }
     }
+
+    function buttonCreateEmployee() {
+
+        let sectionEmployee = document.getElementById('employee');
+        let sectionCreateEmployee = document.getElementById('employeeCreateForm');
+
+        if(!sectionEmployee.classList.contains('d-none')) {
+            sectionEmployee.classList.add('d-none');
+        }
+        if(sectionEmployee.classList.contains('d-md-block')) {
+            sectionEmployee.classList.remove('d-md-block');
+        }
+
+        if(sectionCreateEmployee.classList.contains('d-none')) {
+            sectionCreateEmployee.classList.remove('d-none');
+        }
+        if(!sectionCreateEmployee.classList.contains('d-md-block')) {
+            sectionCreateEmployee.classList.add('d-md-block');
+        }
+    }
+
+    function buttonModifyEmployee(id) {
+        id=id.toString();
+        let sectionDisplayEmployee = document.getElementById('employeeDisplay'+id.toString());
+        let sectionModifyEmployee = document.getElementById('employeeModifyForm'+id.toString());
+                
+        if(!sectionDisplayEmployee.classList.contains('d-none')) {
+            sectionDisplayEmployee.classList.add('d-none');
+        }
+        if(sectionModifyEmployee.classList.contains('d-none')) {
+            sectionModifyEmployee.classList.remove('d-none');
+        }
+
+    }
+
 </script>
 {% endblock %}

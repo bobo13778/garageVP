@@ -1,8 +1,6 @@
 <?php
 namespace App\Controller;
 session_start();
-
-
 use App\Model\Admin;
 use App\Model\Employe;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

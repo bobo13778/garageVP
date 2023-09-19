@@ -95,7 +95,7 @@ class Employe extends Model
 
     public function setPassword(string $password): void
     {
-        $this->password = $password;
+        $this->password = password_hash($password, PASSWORD_BCRYPT);
     }
 
     public function setModerator(bool $moderator): void
@@ -103,7 +103,7 @@ class Employe extends Model
         $this->moderator = $moderator;
     }
     
-    public function setPoste(int $poste): void
+    public function setPoste(string $poste): void
     {
         $this->poste = $poste;
     }

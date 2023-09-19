@@ -1,0 +1,29 @@
+        <form class="container-fluid" method="POST" action="./admin/submitemployee">
+          <div class="row">
+              <div class="form-group col-12 col-md-6 mb-3">
+                  <label for="firstname"><h4>Prénom</h4></label>
+                  <input type="text" class="form-control" id="firstname" name="firstname" required/>
+              </div>
+              <div class="form-group col-12 col-md-6 mb-3">
+                  <label for="lastname"><h4>Nom</h4></label>
+                  <input type="text" class="form-control" id="lastname" name="lastname" required/>
+              </div>
+              <div class="form-group col-12 col-md-6 mb-3">
+                  <label for="email"><h4>Email</h4></label>
+                  <input type="email" class="form-control" id="email" name="email" required/>
+              </div>
+              <div class="form-group col-12 col-md-6 mb-3">
+                  <label for="password"><h4>Mot de passe</h4></label>
+                  <input type="password" class="form-control" id="password" name="password" required>
+              </div>
+              <div class="form-check col-12 col-md-6 mb-3">
+                  <input type="checkbox" class="form-check-input" id="moderator" name="moderator" value="1">
+                  <label class="form-check-label" for="moderator"><h4>Modérateur</h4></label>
+              </div>
+              <div class="form-group col-12 col-md-6 mb-3">
+                  <label for="poste"><h4>Poste</h4></label>
+                  <input type="text" class="form-control" id="poste" name="poste">
+              </div>
+              <button type="submit" class="btn mt-3 mb-3 col-3">Envoyer</button>
+          </div>
+        </form>
