@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\Fuel;
+use App\Model\Horaire;
 use App\Model\Photo;
 use App\Model\Vehicule;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +16,8 @@ class SecondHandDetailPageController extends AbstractController
     #[Route('/occasiondetail{page}', name: 'app_second_hand_detail_page')]
     public function index(Request $request): Response
     {
+        $scheduleModel = new Horaire;
+        $schedules = $scheduleModel->findAll();
 
         if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
             $auth = $_SESSION['Auth'];
@@ -37,7 +40,8 @@ class SecondHandDetailPageController extends AbstractController
             'auth' => $auth,
             'vehicule' => $vehicule,
             'photo1' => $photo1,
-            'photos' => $photos
+            'photos' => $photos,
+            'schedules' => $schedules
         ]);
     }
 }

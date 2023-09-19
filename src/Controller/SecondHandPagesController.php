@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\Fuel;
+use App\Model\Horaire;
 use App\Model\Photo;
 use App\Model\Vehicule;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,6 +28,10 @@ class SecondHandPagesController extends AbstractController
             $fuel = $fuelModel->find($vehicule['fuelId']);
             $vehicules[$index]['fuel'] = $fuel['type'];
         }
+        $scheduleModel = new Horaire;
+        $schedules = $scheduleModel->findAll();
+
+
         if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
             $auth = $_SESSION['Auth'];
         } else {
@@ -34,7 +39,8 @@ class SecondHandPagesController extends AbstractController
         }
         return $this->render('second_hand_pages/index.html.twig', [
             'auth' => $auth,
-            'vehicules' => $vehicules
+            'vehicules' => $vehicules,
+            'schedules' => $schedules
         ]);
     }
 }

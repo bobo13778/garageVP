@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\Fuel;
+use App\Model\Horaire;
 use App\Model\Photo;
 use App\Model\Temoignage;
 use App\Model\Vehicule;
@@ -49,6 +50,10 @@ class EmployeePageController extends AbstractController
             $testimonies[$key]['time'] = date("H:m", strtotime($testimony['createdAt']));
         }
         
+        $scheduleModel = new Horaire;
+        $schedules = $scheduleModel->findAll();
+
+
         if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
             $auth = $_SESSION['Auth'];
         } else {
@@ -61,7 +66,8 @@ class EmployeePageController extends AbstractController
         return $this->render('employee_page/index.html.twig', [
             'auth' => $auth,
             'testimonies' => $testimonies,
-            'vehicules' => $vehicules
+            'vehicules' => $vehicules,
+            'schedules' => $schedules
          ]);
     }
     //gestion de la création d'un témoignage

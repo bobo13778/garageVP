@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\Horaire;
 use App\Model\Service;
 use App\Model\Temoignage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,6 +26,9 @@ class HomePageController extends AbstractController
             $testimonies[$key]['date'] = date("d/m/Y", strtotime($testimony['createdAt']));
             $testimonies[$key]['time'] = date("H:m", strtotime($testimony['createdAt']));
         }
+        $scheduleModel = new Horaire;
+        $schedules = $scheduleModel->findAll();
+
         if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
             $auth = $_SESSION['Auth'];
         } else {
@@ -33,7 +37,8 @@ class HomePageController extends AbstractController
         return $this->render('homepage/index.html.twig', [
             'services' => $services,
             'testimonies' => $testimonies,
-            'auth' => $auth
+            'auth' => $auth,
+            'schedules' => $schedules
         ]);
     }
 

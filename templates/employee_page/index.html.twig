@@ -170,3 +170,7 @@
     }
 </script>
 {% endblock %}
+
+{% block schedule %}
+  {% include './_schedule_template.html.twig' with {'schedules': schedules} %}
+{% endblock %}

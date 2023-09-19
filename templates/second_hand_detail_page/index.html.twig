@@ -48,3 +48,7 @@
 <span>Volume du coffre : {{vehicule.trunkVolume}} l</span>
 <a href="./contact?annonce={{vehicule.id}}" class ="btn">Nous contacter pour cette annonce</a>
 {% endblock %}
+
+{% block schedule %}
+  {% include './_schedule_template.html.twig' with {'schedules': schedules} %}
+{% endblock %}

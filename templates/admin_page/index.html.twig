@@ -127,49 +127,62 @@
         <div id="schedule" class="col-12 col-md-3 d-none d-md-block">
             <div class="row">
                 <h2 class="text-center d-none d-md-block">Horaires</h2>
-                <table class="table shadow">
-                    <thead>
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col" colspan='2' class="text-center">Matin</th>
-                            <th scope="col"></th>
-                            <th scope="col" colspan='2' class="text-center">Après-midi</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row"></td>
-                            <td>Ouverture</td>
-                            <td>Fermeture</td>
-                            <td>Fermé</td>
-                            <td>Ouverture</td>
-                            <td>Fermeture</td>
-                            <td>Fermé</td>
-                        </tr>
-                        {% for schedule in schedules %}
+
+{# affichage des horaires #}
+                <div id="scheduleDisplay" class="">
+                    <table class="table shadow">
+                        <thead>
                             <tr>
-                                <th scope="row">{{schedule.day}}</td>
-                                <td>{{schedule.morningStart}}</td>
-                                <td>{{schedule.morningEnd}}</td>
-                                {% if schedule.morningIsClosed == '1' %}
-                                    <td><input type="checkbox" checked/></td>
-                                {% else %}
-                                    <td><input type="checkbox"/></td>
-                                {% endif %}
-                                <td>{{schedule.afternoonStart}}</td>
-                                <td>{{schedule.afternoonEnd}}</td>
-                                {% if schedule.afternoonIsClosed == '1' %}
-                                    <td><input type="checkbox" checked/></td>
-                                {% else %}
-                                    <td><input type="checkbox"/></td>
-                                {% endif %}
+                                <th scope="col"></th>
+                                <th scope="col" colspan='2' class="text-center">Matin</th>
+                                <th scope="col"></th>
+                                <th scope="col" colspan='2' class="text-center">Après-midi</th>
+                                <th scope="col"></th>
                             </tr>
-                        {% endfor %}
-                </table>
-                <div class="row justify-content-around mt-3 mb-3">
-                    <a href="" class="btn col-3">Modifier</a>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row"></td>
+                                <td>Ouverture</td>
+                                <td>Fermeture</td>
+                                <td>Fermé</td>
+                                <td>Ouverture</td>
+                                <td>Fermeture</td>
+                                <td>Fermé</td>
+                            </tr>
+                            {% for schedule in schedules %}
+                                <tr>
+                                    <th scope="row">{{schedule.day}}</td>
+                                    <td>{{schedule.morningStart}}</td>
+                                    <td>{{schedule.morningEnd}}</td>
+                                    {% if schedule.morningIsClosed %}
+                                        <td><input type="checkbox" checked/></td>
+                                    {% else %}
+                                        <td><input type="checkbox"/></td>
+                                    {% endif %}
+                                    <td>{{schedule.afternoonStart}}</td>
+                                    <td>{{schedule.afternoonEnd}}</td>
+                                    {% if schedule.afternoonIsClosed %}
+                                        <td><input type="checkbox" checked/></td>
+                                    {% else %}
+                                        <td><input type="checkbox"/></td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                    </table>
+                    <div class="row justify-content-around mt-3 mb-3">
+                        <button id="modifySchedule" onclick="buttonModifySchedule()" class="btn col-3">Modifier</button>
+                    </div>
                 </div>
+
+{# modification des horaires #}
+                <div id="scheduleModifyForm" class="d-none">
+                    <div class="row justify-content-around mt-3 mb-3">
+                        <a class="btn col-3" href="./admin">Annuler</a>
+                    </div>
+                    {% include './admin_page/_form_modify_schedule.html.twig' with {'schedules' : schedules} %}
+                </div>
+
             </div>
         </div>
 
@@ -181,6 +194,7 @@
 <script>
 
     function buttonClicked(title) {
+
         let btnEmployee = document.getElementById('employeeBtn');
         let btnService = document.getElementById('serviceBtn');
         let btnSchedule = document.getElementById('scheduleBtn');
@@ -266,6 +280,7 @@
     }
 
     function buttonModifyEmployee(id) {
+
         id=id.toString();
         let sectionDisplayEmployee = document.getElementById('employeeDisplay'+id.toString());
         let sectionModifyEmployee = document.getElementById('employeeModifyForm'+id.toString());
@@ -300,6 +315,7 @@
     }
 
     function buttonModifyService(id) {
+
         id=id.toString();
         let sectionDisplayService = document.getElementById('serviceDisplay'+id.toString());
         let sectionModifyService = document.getElementById('serviceModifyForm'+id.toString());
@@ -310,8 +326,24 @@
         if(sectionModifyService.classList.contains('d-none')) {
             sectionModifyService.classList.remove('d-none');
         }
+    }
 
+    function buttonModifySchedule() {
+
+        let sectionDisplaySchedule = document.getElementById('scheduleDisplay');
+        let sectionModifySchedule = document.getElementById('scheduleModifyForm');
+                
+        if(!sectionDisplaySchedule.classList.contains('d-none')) {
+            sectionDisplaySchedule.classList.add('d-none');
+        }
+        if(sectionModifySchedule.classList.contains('d-none')) {
+            sectionModifySchedule.classList.remove('d-none');
+        }
     }
 
 </script>
+{% endblock %}
+
+{% block schedule %}
+  {% include './_schedule_template.html.twig' with {'schedules': schedules} %}
 {% endblock %}

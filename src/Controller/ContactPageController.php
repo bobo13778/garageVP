@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\Horaire;
 use App\Model\MessageContact;
 use App\Model\Vehicule;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,6 +28,10 @@ class ContactPageController extends AbstractController
             $title = 'simple';
         }
 
+        $scheduleModel = new Horaire;
+        $schedules = $scheduleModel->findAll();
+
+
         if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
             $auth = $_SESSION['Auth'];
         } else {
@@ -34,7 +39,8 @@ class ContactPageController extends AbstractController
         }
         return $this->render('contact_page/index.html.twig', [
             'auth' => $auth,
-            'title' => $title
+            'title' => $title,
+            'schedules' => $schedules
         ]);
     }
 

@@ -3,6 +3,7 @@ namespace App\Controller;
 session_start();
 use App\Model\Admin;
 use App\Model\Employe;
+use App\Model\Horaire;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,6 +13,9 @@ class LoginPageController extends AbstractController
     #[Route('/connexion', name: 'app_login_page')]
     public function index(): Response
     {
+        $scheduleModel = new Horaire;
+        $schedules = $scheduleModel->findAll();
+
         if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
             $auth = $_SESSION['Auth'];
         } else {
@@ -37,22 +41,26 @@ class LoginPageController extends AbstractController
                 echo '<script>alert(\'Mauvais identifiants\')</script>';
                 return $this->render('/login_page/index.html.twig', [
                     'auth' => $auth,
+                    'schedules' => $schedules
                 ]);
               }
             } else {
               echo '<script>alert(\'Mauvais identifiants\')</script>';
               return $this->render('/login_page/index.html.twig', [
                 'auth' => $auth,
+                'schedules' => $schedules
             ]);
             }
           } else {
             return $this->render('/login_page/index.html.twig', [
                 'auth' => $auth,
+                'schedules' => $schedules
             ]);
           }
 
         return $this->render('login_page/index.html.twig', [
             'auth' => $auth,
+            'schedules' => $schedules
         ]);
     }
 }

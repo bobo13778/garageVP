@@ -1,0 +1,29 @@
+<div class="container-fluid">
+  <p>
+    <a class="link" data-bs-toggle="collapse" data-bs-target="#collapseSchedule" role="button" aria-expanded="false" aria-controls="collapseExample">
+      Horaires
+    </a>
+  </p>
+  <div class="collapse" id="collapseSchedule">
+    <ul class="list-unstyled">
+      {% for schedule in schedules %}
+        <li>
+          <p class="row">
+            <strong class="col-3">{{schedule.day}} : </strong>
+            {% if schedule.morningIsClosed %}
+              {% if schedule.afternoonIsClosed %}
+                <p class="col-9">Fermé</p>
+              {% else %}
+                <p class="col-9">Ouvert de {{schedule.afternoonStart}} à {{schedule.afternoonEnd}}</p>
+              {% endif %}
+            {% elseif schedule.afternoonIsClosed %}
+            <p class="col-9">Ouvert de {{schedule.morningStart}} à {{schedule.morningEnd}}</p>
+            {% else %}
+            <p class="col-9">Ouvert de {{schedule.morningStart}} à {{schedule.morningEnd}} et de {{schedule.afternoonStart}} à {{schedule.afternoonEnd}}</p>
+            {% endif %}
+          </p>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>

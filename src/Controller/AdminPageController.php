@@ -34,6 +34,9 @@ class AdminPageController extends AbstractController
         if(isset($_GET['servicemodified']) && $_GET['servicemodified']) {
             echo'<script>alert(\'Service modifié\')</script>';
         }
+        if(isset($_GET['scheduleemodified']) && $_GET['scheduleemodified']) {
+            echo'<script>alert(\'Horaires modifiés\')</script>';
+        }
 
         $employeeModel = new Employe;
         $employees = $employeeModel->findAll();
@@ -124,6 +127,9 @@ class AdminPageController extends AbstractController
             $idEmployeeToModify = (int)$_POST['idToModify'];
             unset($_POST['idToModify']);
             $employeeModel = new Employe();
+            if(!isset($_POST['moderator'])) {
+                $_POST['moderator'] = '';
+            }
             $employeeDatas = $employeeModel->hydrate($_POST);
             $employeeModel->update($idEmployeeToModify, $employeeDatas);
             header("location:./?employeemodified=true");
@@ -223,6 +229,54 @@ class AdminPageController extends AbstractController
             $serviceDatas = $serviceModel->hydrate($_POST);
             $serviceModel->update($idServiceToModify, $serviceDatas);
             header("location:./?servicemodified=true");
+            exit();
+  
+          }
+          
+          if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
+              $auth = $_SESSION['Auth'];
+          } else {
+              $auth = '';
+          }
+          if($auth !== 'admin') {
+              header('location:./');
+              exit();
+          }
+          return $this->render('admin_page/index.html.twig', [
+              'auth' => $auth,
+  
+          ]);
+      }
+
+      //gestion de la modification des horaires
+      #[Route('/admin/modifyschedule', name: 'app_admin_modifyschedule_page', methods:['POST'])]
+      public function modifySchedule() : Response
+      {   
+        if(isset($_POST) && !empty($_POST)) {
+
+            $scheduleModel = new Horaire();
+            for($count=1; $count<8; $count++) {
+                $datas = [
+                    'day' => $_POST['day'.$count],
+                    'morningStart' => date('H:i:s', strtotime($_POST['morningStart'.$count])),
+                    'morningEnd' => date('H:i:s', strtotime($_POST['morningEnd'.$count])),
+                    'afternoonStart' => date('H:i:s', strtotime($_POST['afternoonStart'.$count])),
+                    'afternoonEnd' => date('H:i:s', strtotime($_POST['afternoonEnd'.$count]))
+                ];
+                if(isset($_POST['morningIsClosed'.$count])) {
+                    $datas['morningIsClosed'] = $_POST['morningIsClosed'.$count];
+                } else {
+                    $datas['morningIsClosed'] = '';
+                }
+                if(isset($_POST['afternoonIsClosed'.$count])) {
+                    $datas['afternoonIsClosed'] = $_POST['afternoonIsClosed'.$count];
+                } else {
+                    $datas['afternoonIsClosed'] = '';
+                }
+                $scheduleDatas = $scheduleModel->hydrate($datas);
+                $scheduleModel->update($count, $scheduleDatas);
+            }
+            header("location:./?scheduleemodified=true");
             exit();
   
           }
