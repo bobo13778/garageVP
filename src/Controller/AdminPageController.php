@@ -15,14 +15,24 @@ class AdminPageController extends AbstractController
     #[Route('/admin', name: 'app_admin_page', methods:['GET'])]
     public function index(): Response
     {
-        if(isset($_GET['employeecreated']) && $_GET['employeecreated']){
-            echo'<script>alert(\'L\'employé a bien été enregistré\')</script>';
+        if(isset($_GET['employeecreated']) && $_GET['employeecreated']) {
+            echo'<script>alert(\'Employé enregistré\')</script>';
         }
-        if(isset($_GET['employeedeleted']) && $_GET['employeedeleted']){
-            echo'<script>alert(\'L\'employé a bien été supprimé\')</script>';
+        if(isset($_GET['employeedeleted']) && $_GET['employeedeleted']) {
+            echo'<script>alert(\'Employé supprimé\')</script>';
         }
-        if(isset($_GET['employeemodified']) && $_GET['employeemodified']){
-            echo'<script>alert(\'L\'employé a bien été modifié\')</script>';
+        if(isset($_GET['employeemodified']) && $_GET['employeemodified']) {
+            echo'<script>alert(\'Employé modifié\')</script>';
+        }
+
+        if(isset($_GET['servicecreated']) && $_GET['servicecreated']) {
+            echo'<script>alert(\'Service enregistré\')</script>';
+        }
+        if(isset($_GET['servicedeleted']) && $_GET['servicedeleted']) {
+            echo'<script>alert(\'Service supprimé\')</script>';
+        }
+        if(isset($_GET['servicemodified']) && $_GET['servicemodified']) {
+            echo'<script>alert(\'Service modifié\')</script>';
         }
 
         $employeeModel = new Employe;
@@ -48,6 +58,7 @@ class AdminPageController extends AbstractController
             'schedules' => $schedules
         ]);
     }
+//CRUD employé
 
     //gestion de l'ajout d'un employé
     #[Route('/admin/submitemployee', name: 'app_admin_addemployee_page', methods:['POST'])]
@@ -116,6 +127,92 @@ class AdminPageController extends AbstractController
             $employeeDatas = $employeeModel->hydrate($_POST);
             $employeeModel->update($idEmployeeToModify, $employeeDatas);
             header("location:./?employeemodified=true");
+            exit();
+  
+          }
+          
+          if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
+              $auth = $_SESSION['Auth'];
+          } else {
+              $auth = '';
+          }
+          if($auth !== 'admin') {
+              header('location:./');
+              exit();
+          }
+          return $this->render('admin_page/index.html.twig', [
+              'auth' => $auth,
+  
+          ]);
+      }
+//CRUD services
+      //gestion de l'ajout d'un service
+    #[Route('/admin/submitservice', name: 'app_admin_addservice_page', methods:['POST'])]
+    public function newService() : Response
+    {   
+        if(isset($_POST) && !empty($_POST)) {
+            $service = new Service();
+            $service = $service->hydrate($_POST);
+            $service->create($service);
+            header("location:./?servicecreated=true");
+            exit();
+
+        }
+        
+        if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
+            $auth = $_SESSION['Auth'];
+        } else {
+            $auth = '';
+        }
+        if($auth !== 'admin') {
+            header('location:./');
+            exit();
+        }
+        return $this->render('admin_page/index.html.twig', [
+            'auth' => $auth,
+
+        ]);
+    }
+
+     //gestion de la suppression d'un service
+     #[Route('/admin/deleteservice', name: 'app_admin_deleteservice_page', methods:['GET'])]
+     public function deleteService() : Response
+     {   
+         if(isset($_GET['id']) && !empty($_GET['id'])) {
+             $service = new Service();
+             $service = $service->delete($_GET['id']);
+             header("location:./?servicedeleted=true");
+             exit();
+ 
+         }
+         
+         if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
+             $auth = $_SESSION['Auth'];
+         } else {
+             $auth = '';
+         }
+         if($auth !== 'admin') {
+             header('location:./');
+             exit();
+         }
+         return $this->render('admin_page/index.html.twig', [
+             'auth' => $auth,
+ 
+         ]);
+     }
+
+      //gestion de la modification d'un service
+      #[Route('/admin/modifyservice', name: 'app_admin_modifyservice_page', methods:['POST'])]
+      public function modifyService() : Response
+      {   
+        if(isset($_POST) && !empty($_POST)) {
+
+            $idServiceToModify = (int)$_POST['idServiceToModify'];
+            unset($_POST['idServiceToModify']);
+            $serviceModel = new Service();
+            $serviceDatas = $serviceModel->hydrate($_POST);
+            $serviceModel->update($idServiceToModify, $serviceDatas);
+            header("location:./?servicemodified=true");
             exit();
   
           }

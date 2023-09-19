@@ -7,19 +7,21 @@
 {% endblock %}
 
 {% block body %}
-
+{# Navigation version mobile #}
 <div class="d-md-none">
     <h2 id="mainTitle">Employés</h2>
     <div>
         <button id="employeeBtn" class="btn" onclick="buttonClicked('Employés')" disabled>Employés</button>
-        <button id="serviceBtn" class="btn" onclick="buttonClicked('Services')">Services</button>
+        <button id="serviceBtn" class="btn" onclick="buttonClicked('Service')">Services</button>
         <button id="scheduleBtn" class="btn" onclick="buttonClicked('Horaires')">Horaires</button>
     </div>
 </div>
-
+{# Contenu principal #}
 <div class="container-fluid">
     <div class="row w-100">
 
+{# Employés #}
+{# Formulaire de création des employés avec boutton d'annulation#}
         <div id="employeeCreateForm" class="col-12 col-md-4 d-none">
             <div class="row justify-content-around mt-3 mb-3">
                 <a class="btn col-3" href="./admin">Annuler</a>
@@ -27,6 +29,7 @@
             {% include './admin_page/_form_add_employee.html.twig' %}
         </div>
 
+{# Affichage des employés #}
         <div id="employee" class="col-12 col-md-4 d-md-block">
             <h2 class="text-center d-none d-md-block">Employés</h2>
             <div class="row justify-content-around mt-3 mb-3">
@@ -34,6 +37,7 @@
             </div>
             {% for employee in employees %}
 
+{# Formulaire de modification des employés avec boutton d'annulation #}
                 <div id="employeeModifyForm{{employee.id}}" class="shadow pt-2 pb-2 mb-2 d-none">
                     <div class="row justify-content-around mt-3 mb-3">
                         <a class="btn col-3" href="./admin">Annuler</a>
@@ -41,12 +45,13 @@
                     {% include './admin_page/_form_modify_employee.html.twig' with {'employee' : employee} %}
                 </div>
 
+{# Affichage du détail des employés #}
                 <div id="employeeDisplay{{employee.id}}" class="shadow pt-2 pb-2 mb-2">
                       <div class="row ps-2">
                         <span>
                             <strong>Nom : </strong>{{employee.firstname}} {{employee.lastname}}
                         </span></br>
-                                    <span>
+                        <span>
                             <strong>Poste : </strong>{{employee.poste}}
                         </span></br>
                         <span>
@@ -61,6 +66,8 @@
                             <strong>Email : </strong>{{employee.email}}
                         </span>
                     </div>
+
+{# Boutons de modification et de suppression des employés #}
                     <div class="row justify-content-around mt-3 mb-3">
                         <button id="modifyEmployeeBtn" onclick="buttonModifyEmployee({{employee.id}})" class="btn col-3">Modifier</button>
                         <a href="./admin/deleteemployee?id={{employee.id}}" class="btn col-3">Supprimer</a>
@@ -69,32 +76,54 @@
             {% endfor %}
         </div>
 
-        <div id="services" class="col-12 col-md-4 d-none d-md-block">
+{# Services #}
+{# Formulaire de création des services avec boutton d'annulation #}
+        <div id="serviceCreateForm" class="col-12 col-md-4 d-none">
+            <div class="row justify-content-around mt-3 mb-3">
+                <a class="btn col-3" href="./admin">Annuler</a>
+            </div>
+            {% include './admin_page/_form_add_service.html.twig' %}
+        </div>
+
+{# Affichage des services #}
+        <div id="service" class="col-12 col-md-4 d-none d-md-block">
             <h2 class="text-center d-none d-md-block">Services</h2>
             <div class="row justify-content-around mt-3 mb-3">
-                <a href="" class="btn col-3">Nouveau</a>
+                <button id="serviceCreateBtn" class="btn col-3" onclick="buttonCreateService()">Nouveau</button>
             </div>
             {% for service in services %}
-                <div class="shadow pt-2 pb-2 mb-2">
+
+{# Formulaire de modification des services avec boutton d'annulation #}
+                <div id="serviceModifyForm{{service.id}}" class="shadow pt-2 pb-2 mb-2 d-none">
+                    <div class="row justify-content-around mt-3 mb-3">
+                        <a class="btn col-3" href="./admin">Annuler</a>
+                    </div>
+                    {% include './admin_page/_form_modify_service.html.twig' with {'service' : service} %}
+                </div>
+
+{# Affichage du détail des services #}
+                <div id="serviceDisplay{{service.id}}" class="shadow pt-2 pb-2 mb-2">
                     <div class="row ps-2">
                         <span>
                             <strong>Titre : </strong>{{service.name}}
                         </span></br>
-                                    <span>
+                        <span>
                             <strong>Description : </strong>{{service.description}}
                         </span></br>
                         <span>
                             <strong>Image : </strong>{{service.picture}}
                         </span>
                     </div>
+{# Boutons de modification et de suppression des services #}
                     <div class="row justify-content-around mt-3 mb-3">
-                        <a href="" class="btn col-3">Modifier</a>
-                        <a href="" class="btn col-3">Supprimer</a>
+                        <button id="modifyServiceBtn" onclick="buttonModifyService({{service.id}})" class="btn col-3">Modifier</button>
+                        <a href="./admin/deleteservice?id={{service.id}}" class="btn col-3">Supprimer</a>
                     </div>
                 </div>
             {% endfor %}
-          </div>
+        </div>
 
+{# horaires #}
         <div id="schedule" class="col-12 col-md-3 d-none d-md-block">
             <div class="row">
                 <h2 class="text-center d-none d-md-block">Horaires</h2>
@@ -160,7 +189,7 @@
         let mainTitle = document.getElementById('mainTitle');
 
         let sectionEmployee = document.getElementById('employee');
-        let sectionServices = document.getElementById('services');
+        let sectionService = document.getElementById('service');
         let sectionSchedule = document.getElementById('schedule');
 
         mainTitle.innerText = title;
@@ -173,23 +202,23 @@
                 if(sectionEmployee.classList.contains('d-none')) {
                     sectionEmployee.classList.remove('d-none');
                 }
-                if(!sectionServices.classList.contains('d-none')) {
-                    sectionServices.classList.add('d-none');
+                if(!sectionService.classList.contains('d-none')) {
+                    sectionService.classList.add('d-none');
                 }
                 if(!sectionSchedule.classList.contains('d-none')) {
                     sectionSchedule.classList.add('d-none');
                 }
                 break;
 
-            case 'Services' :
+            case 'Service' :
                 btnEmployee.removeAttribute('disabled', '');
                 btnService.setAttribute('disabled', '');
                 btnSchedule.removeAttribute('disabled');
                 if(!sectionEmployee.classList.contains('d-none')) {
                     sectionEmployee.classList.add('d-none');
                 }
-                if(sectionServices.classList.contains('d-none')) {
-                    sectionServices.classList.remove('d-none');
+                if(sectionService.classList.contains('d-none')) {
+                    sectionService.classList.remove('d-none');
                 }
                 if(!sectionSchedule.classList.contains('d-none')) {
                     sectionSchedule.classList.add('d-none');
@@ -203,8 +232,8 @@
                 if(!sectionEmployee.classList.contains('d-none')) {
                     sectionEmployee.classList.add('d-none');
                 }
-                if(!sectionServices.classList.contains('d-none')) {
-                    sectionServices.classList.add('d-none');
+                if(!sectionService.classList.contains('d-none')) {
+                    sectionService.classList.add('d-none');
                 }
                 if(sectionSchedule.classList.contains('d-none')) {
                     sectionSchedule.classList.remove('d-none');
@@ -246,6 +275,40 @@
         }
         if(sectionModifyEmployee.classList.contains('d-none')) {
             sectionModifyEmployee.classList.remove('d-none');
+        }
+
+    }
+
+        function buttonCreateService() {
+
+        let sectionService = document.getElementById('service');
+        let sectionCreateService = document.getElementById('serviceCreateForm');
+
+        if(!sectionService.classList.contains('d-none')) {
+            sectionService.classList.add('d-none');
+        }
+        if(sectionService.classList.contains('d-md-block')) {
+            sectionService.classList.remove('d-md-block');
+        }
+
+        if(sectionCreateService.classList.contains('d-none')) {
+            sectionCreateService.classList.remove('d-none');
+        }
+        if(!sectionCreateService.classList.contains('d-md-block')) {
+            sectionCreateService.classList.add('d-md-block');
+        }
+    }
+
+    function buttonModifyService(id) {
+        id=id.toString();
+        let sectionDisplayService = document.getElementById('serviceDisplay'+id.toString());
+        let sectionModifyService = document.getElementById('serviceModifyForm'+id.toString());
+                
+        if(!sectionDisplayService.classList.contains('d-none')) {
+            sectionDisplayService.classList.add('d-none');
+        }
+        if(sectionModifyService.classList.contains('d-none')) {
+            sectionModifyService.classList.remove('d-none');
         }
 
     }
