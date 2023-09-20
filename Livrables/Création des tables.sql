@@ -1,4 +1,4 @@
-CREATE TABLE Employes (
+CREATE TABLE employes (
   id INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   firstname VARCHAR(250) NOT NULL,
   lastname VARCHAR(250) NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE Employes (
   poste VARCHAR(250)
 );
 
-CREATE TABLE Administrateurs (
+CREATE TABLE administrateurs (
   id INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   firstname VARCHAR(250) NOT NULL,
   lastname VARCHAR(250) NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE Administrateurs (
   password VARCHAR(60) NOT NULL   
 );
 
-CREATE TABLE Horaires (
+CREATE TABLE horaires (
   id INT(10) NOT NULL PRIMARY KEY,
   day VARCHAR(50) UNIQUE NOT NULL,
   morningStart TIME,
@@ -27,14 +27,14 @@ CREATE TABLE Horaires (
   afternoonIsClosed VARCHAR(10)
 );
 
-CREATE TABLE Services (
+CREATE TABLE services (
   id INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(250) NOT NULL,
   description TEXT NOT NULL,
   picture VARCHAR(500) NOT NULL
 );
 
-CREATE TABLE Temoignages (
+CREATE TABLE temoignages (
   id INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(250) NOT NULL,
   content TEXT NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE Temoignages (
   createdAt DATETIME NOT NULL
 );
 
-CREATE TABLE MessageContacts (
+CREATE TABLE messageContacts (
   id INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   firstname VARCHAR(250) NOT NULL,
   lastname VARCHAR(250) NOT NULL,
@@ -54,12 +54,12 @@ CREATE TABLE MessageContacts (
   createdAt DATETIME NOT NULL
 );
 
-CREATE TABLE Photos (
+CREATE TABLE photos (
   id INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   src VARCHAR(500) NOT NULL
 );
 
-CREATE TABLE Vehicules (
+CREATE TABLE vehicules (
   id INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   title VARCHAR(500) NOT NULL,
   description TEXT,
@@ -79,8 +79,8 @@ CREATE TABLE Vehicules (
   fiscalPower INT(10),
   co2Emission INT(10),
   fuel VARCHAR(250) NOT NULL,
-  FOREIGN KEY(mainpictureId) REFERENCES Photos(id)
+  FOREIGN KEY(mainpictureId) REFERENCES photos(id)
 );
 
-ALTER TABLE Photos ADD vehiculeId INT(10);
-ALTER TABLE Photos ADD CONSTRAINT FOREIGN KEY(vehiculeId) REFERENCES Vehicules(id);
+ALTER TABLE photos ADD vehiculeId INT(10);
+ALTER TABLE photos ADD CONSTRAINT FOREIGN KEY(vehiculeId) REFERENCES vehicules(id);
