@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Model\Fuel;
 use App\Model\Horaire;
 use App\Model\Photo;
 use App\Model\Vehicule;
@@ -23,11 +22,7 @@ class SecondHandPagesController extends AbstractController
               $mainPicture = $photoModel->find($vehicule['mainpictureId']);
               $vehicules[$index]['mainPicture'] = $mainPicture['src'];
         }
-        $fuelModel = new Fuel;
-        foreach($vehicules as $index => $vehicule){
-            $fuel = $fuelModel->find($vehicule['fuelId']);
-            $vehicules[$index]['fuel'] = $fuel['type'];
-        }
+
         $scheduleModel = new Horaire;
         $schedules = $scheduleModel->findAll();
 

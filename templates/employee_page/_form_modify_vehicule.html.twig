@@ -1,0 +1,89 @@
+<form class="container-fluid" method="POST" action="./employe/modifyvehicule" enctype="multipart/form-data">
+  <div class="row">
+      <div class="form-group col-12 mb-3">
+          <label for="title"><h4>Titre*</h4></label>
+          <input type="text" class="form-control" id="title" name="title" value="{{vehicule.title}}" required/>
+      </div>
+      <div class="form-group col-12 mb-3">
+          <label for="description"><h4>Description</h4></label>
+          <textarea class="form-control" id="description" name="description" col="3"/>{{vehicule.description}}</textarea>
+      </div>
+      <div class="form-group col-12 mb-3">
+          <label for="price"><h4>Prix (€)*</h4></label>
+          <input type="number" step="0.01" class="form-control" id="price" name="price" value="{{vehicule.price}}" required/>
+      </div>
+      <div class="custom-file col-12 mb-3">
+            <label for="mainpicture" class="custom-file-label"><h4>Photo principale</h4>laisser vide pour ne pas modifier</label>
+            <input type="file" class="custom-file-input" id="mainpicture" name="mainpicture"/>
+      </div>
+      <div class="form-group col-12 mb-3">
+          <label for="year"><h4>Année*</h4></label>
+          <input type="number" class="form-control" id="year" name="year" value="{{vehicule.year}}" required/>
+      </div>
+      <div class="form-group col-12 mb-3">
+          <label for="mileage"><h4>Kilométrage*</h4></label>
+          <input type="number" class="form-control" id="mileage" name="mileage" value="{{vehicule.mileage}}" required/>
+      </div>
+      <div class="form-group col-12 mb-3">
+          <label for="fuel"><h4>Motorisation*</h4></label>
+          <input type="text" class="form-control" id="fuel" name="fuel" value="{{vehicule.fuel}}" required/>
+      </div>
+      <div class="form-group col-12 mb-3">
+          <label for="gearbox"><h4>Boite de vitesse</h4></label>
+          <input type="text" class="form-control" id="gearbox" name="gearbox" value="{{vehicule.gearbox}}" />
+      </div>
+      <div class="form-group col-12 mb-3">
+          <label for="color"><h4>Couleur</h4></label>
+          <input type="text" class="form-control" id="color" name="color" value="{{vehicule.color}}"/>
+      </div>
+      <div class="form-group col-12 mb-3">
+          <label for="doors"><h4>Portes</h4></label>
+          <input type="number" class="form-control" id="doors" name="doors" value="{{vehicule.doors}}"/>
+      </div>
+      <div class="form-group col-12 mb-3">
+          <label for="seats"><h4>Places</h4></label>
+          <input type="number" class="form-control" id="seats" name="seats" value="{{vehicule.seats}}"/>
+      </div>
+      <div class="form-group col-12 mb-3">
+          <label for="width"><h4>Largeur (m)</h4></label>
+          <input type="number" step="0.001" class="form-control" id="width" name="width" value="{{vehicule.width}}"/>
+      </div>
+      <div class="form-group col-12 mb-3">
+          <label for="height"><h4>Hauteur (m)</h4></label>
+          <input type="number" step="0.001" class="form-control" id="height" name="height" value="{{vehicule.height}}"/>
+      </div>
+      <div class="form-group col-12 mb-3">
+          <label for="length"><h4>Longueur (m)</h4></label>
+          <input type="number" step="0.001" class="form-control" id="length" name="length" value="{{vehicule.length}}"/>
+      </div>
+      <div class="form-group col-12 mb-3">
+          <label for="trunkVolume"><h4>Volume du coffre</h4></label>
+          <input type="number" class="form-control" id="trunkVolume" name="trunkVolume" value="{{vehicule.trunkVolume}}"/>
+      </div>
+      <div class="form-group col-12 mb-3">
+          <label for="power"><h4>Puissance (ch)</h4></label>
+          <input type="number" class="form-control" id="power" name="power" value="{{vehicule.power}}"/>
+      </div>
+      <div class="form-group col-12 mb-3">
+          <label for="fiscalPower"><h4>Puissance fiscale (ch)</h4></label>
+          <input type="number" class="form-control" id="fiscalPower" name="fiscalPower" value="{{vehicule.fiscalPower}}"/>
+      </div>
+      <div class="form-group col-12 mb-3">
+          <label for="co2Emission"><h4>Emission CO2 (g/km)</h4></label>
+          <input type="number" class="form-control" id="co2Emission" name="co2Emission" value="{{vehicule.co2Emission}}"/>
+      </div>
+      <div class="custom-file col-12 mb-3">
+            <label for="pictures" class="custom-file-label"><h4>Ajouter des images</h4></label>
+            <input type="file" class="custom-file-input" id="pictures" name="picture[]" multiple/>
+      </div>
+      {% for photo in vehicule.photos %}
+        <div class="form-group col-12 mb-3">
+          <label for="delete{{photo.id}}">Supprimer {{photo.src}}</label>
+          <input type="checkbox" id="delete{{photo.id}}" name="pictureToDelete[]" value={{photo.id}}/>    
+        </div>
+      {% endfor %}
+      <input type='hidden' name='idVehiculeToModify' value={{vehicule.id}}/> 
+      <button type="submit" class="btn mt-3 mb-5 col-4">Envoyer</button>
+  </div>
+</form>
+

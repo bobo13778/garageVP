@@ -22,7 +22,7 @@ class LoginPageController extends AbstractController
             $auth = '';
         }
         if(isset($_POST) && !empty($_POST)) {
-            $admin = new Admin();
+            $admin = new Admin;
             $employee = new Employe;
             $email = $_POST['email'];
             $password = $_POST['password'];
@@ -44,12 +44,28 @@ class LoginPageController extends AbstractController
                     'schedules' => $schedules
                 ]);
               }
+            } elseif($employee->findBy(['email' => $email]) !== []) {
+
+              $employeeToVerify = $employee->findBy(['email' => $email]);
+
+              if(password_verify($password, $employeeToVerify[0]['password'])) {
+      
+                $_SESSION['Auth'] = 'employee';
+                header("location:./");
+                exit();
+              } else {
+                echo '<script>alert(\'Mauvais identifiants\')</script>';
+                return $this->render('/login_page/index.html.twig', [
+                    'auth' => $auth,
+                    'schedules' => $schedules
+                ]);
+              }
             } else {
               echo '<script>alert(\'Mauvais identifiants\')</script>';
               return $this->render('/login_page/index.html.twig', [
                 'auth' => $auth,
                 'schedules' => $schedules
-            ]);
+              ]);
             }
           } else {
             return $this->render('/login_page/index.html.twig', [

@@ -130,6 +130,9 @@ class AdminPageController extends AbstractController
             if(!isset($_POST['moderator'])) {
                 $_POST['moderator'] = '';
             }
+            if(isset($_POST['password']) && $_POST['password'] === '') {
+                unset($_POST['password']);
+            }
             $employeeDatas = $employeeModel->hydrate($_POST);
             $employeeModel->update($idEmployeeToModify, $employeeDatas);
             header("location:./?employeemodified=true");

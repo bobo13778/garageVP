@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Model\Fuel;
 use App\Model\Horaire;
 use App\Model\Photo;
 use App\Model\Vehicule;
@@ -28,14 +27,15 @@ class SecondHandDetailPageController extends AbstractController
         $vehiculeModel = new Vehicule;
         $vehicule = $vehiculeModel->find($routeParams['page']);
 
-        $fuelModel = new Fuel;
-        $fuel = $fuelModel->find($vehicule['fuelId']);
-        $vehicule['fuel'] = $fuel['type'];
-
         $photoModel = new Photo;
         $photos = $photoModel->findBy(['vehiculeId' => $vehicule['id']]);
-        $photo1 = $photos[0];
-        unset($photos[0]);
+        $photo1 = $photoModel->find($vehicule['mainpictureId']);
+        foreach($photos as $index => $photo) {
+            if($photo['id'] === $photo1['id']) {
+               unset($photos[$index]);
+            }
+        }
+        
         return $this->render('second_hand_detail_page/index.html.twig', [
             'auth' => $auth,
             'vehicule' => $vehicule,

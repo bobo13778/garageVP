@@ -9,13 +9,19 @@
 {% block body %}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12 col-md-6">
+
+{# temoignages #}
+
+{# navigation temoignages #}
+        <div class="col-12 col-md-6 text-center">
             <h2>Témoignages</h2>
             <div>
                 <button id="toValidateBtn" class="btn" onclick="buttonClicked('ToValidate')" disabled>A valider</button>
                 <button id="newBtn" class="btn" onclick="buttonClicked('New')">Nouveau</button>
                 <button id="publishedBtn" class="btn" onclick="buttonClicked('Published')">Publiés</button>
             </div>
+
+{# affichage des temoignages à valider #}
             <div id="toValidate" class="col-12 col-md-4">
                 {% for testimony in testimonies %}
                     {% if testimony.toValidate == '1' %}
@@ -34,6 +40,8 @@
                                     <strong>Déposé le : </strong>{{testimony.date}} à {{testimony.time}}
                                 </span>
                             </div>
+
+{# boutons de publication ou d'annulation des temoignage à valider #}
                             <div class="row justify-content-around mt-3 mb-3">
                                 <a href="./employe/deletetestimony?id={{testimony.id}}" class="btn col-3">Refuser</a>
                                 <a href="./employe/validatetestimony?id={{testimony.id}}" class="btn col-3">Publier</a>
@@ -43,10 +51,12 @@
                 {% endfor %}
             </div>
 
+{# formulaire de création d'un témoignage #}
             <div id="new" class="col-12 col-md-4 d-none">
                     {% include './employee_page/_form_testimony.html.twig' %}
             </div>
 
+{# affichage des témoignages validés #}
             <div id="published" class="col-12 col-md-3 d-none">
                 {% for testimony in testimonies %}
                     {% if testimony.toValidate != '1' %}
@@ -65,6 +75,8 @@
                                     <strong>Déposé le : </strong>{{testimony.date}} à {{testimony.time}}
                                 </span>
                             </div>
+
+{# bouton de suppression d'un témoignage publié #}
                             <div class="row justify-content-around mt-3 mb-3">
                                 <a href="./employe/deletetestimony?id={{testimony.id}}" class="btn col-3">Supprimer</a>
                             </div>
@@ -74,35 +86,57 @@
             </div>
         </div>
 
-        <div class="col-12 col-md-6">
+{# annonces #}
+        <div class="col-12 col-md-6 text-center">
             <h2>Annonces</h2>
-            <div>
-                <button id="NewAnnounceBtn" class="btn" onclick="buttonClicked('NewAnnounce')">Nouveau</button>
+
+{# formulaire de création d'annonce #}
+            <div id="vehiculeCreateForm" class="container-fluid d-none">
+                <div class="row justify-content-around mt-3 mb-3">
+                    <a class="btn col-3" href="./employe">Annuler</a>
+                </div>
+                {% include './employee_page/_form_add_vehicule.html.twig' %} 
             </div>
-            <div id="announceList">
-                {% for vehicule in vehicules %}
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src={{vehicule.mainPicture}} alt="Photo"/>
-                        <div class="card-body">
-                            <h5 class="card-title">{{vehicule.title}}</h5>
-                            <p class="card-text">
-                                <span>Année : {{vehicule.year}}</span></br>
-                                <span>{{vehicule.fuel}}</span></br>
-                                <span>{{vehicule.mileage}} km</span></br>
-                                <span><strong>{{vehicule.price}} €</strong></span>
-                            </p>
-                            <div>
-                                <a href="" class ="btn">Modifier</a>
-                                <a href="" class ="btn">Supprimer</a>
+
+{# affichage des annonces #}
+            <div id="vehicule" class="container-fluid">
+                <div>
+                    <button id="vehiculeCreateBtn" class="btn col-3" onclick="buttonCreateVehicule()">Nouveau</button>
+                </div>
+                <div class="row justify-content-around">
+                    {% for vehicule in vehicules %}
+
+{# formulaire de modification d'une annonce #}
+                        <div id="vehiculeModifyForm{{vehicule.id}}" class="container-fluid d-none" style="width: 18rem;">
+                            <div class="row justify-content-around mt-3 mb-3">
+                                <a class="btn col-4" href="./employe">Annuler</a>
+                            </div>
+                            {% include './employee_page/_form_modify_vehicule.html.twig' with {'vehicule' : vehicule} %} 
+                        </div>
+
+{# affichage des annonces #}
+                        <div id="vehiculeDisplay{{vehicule.id}}" class="card" style="width: 18rem;">
+                            <img class="card-img-top" src={{vehicule.mainPicture}} alt="Photo"/>
+                            <div class="card-body">
+                                <h5 class="card-title">{{vehicule.title}}</h5>
+                                <p class="card-text">
+                                    <span>Année : {{vehicule.year}}</span></br>
+                                    <span>{{vehicule.fuel}}</span></br>
+                                    <span>{{vehicule.mileage}} km</span></br>
+                                    <span><strong>{{vehicule.price}} €</strong></span>
+                                </p>
+{# boutons de modification et de suppression d'annonce #}
+                                <div class="row justify-content-around mt-3 mb-3">
+                                    <button id="modifyServiceBtn" onclick="buttonModifyVehicule({{vehicule.id}})" class="btn col-5">Modifier</button>
+                                    <a href="./employe/deletevehicule?id={{vehicule.id}}" class="btn col-5">Supprimer</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+
+                </div>
             </div>
 
-            <div id="newAnnounce">
-
-            </div>
         </div>
     </div>
 </div>
@@ -168,6 +202,37 @@
                 break;
         }
     }
+
+    function buttonCreateVehicule() {
+
+        let sectionVehicule = document.getElementById('vehicule');
+        let sectionCreateVehicule = document.getElementById('vehiculeCreateForm');
+
+        if(!sectionVehicule.classList.contains('d-none')) {
+            sectionVehicule.classList.add('d-none');
+        }
+ 
+        if(sectionCreateVehicule.classList.contains('d-none')) {
+            sectionCreateVehicule.classList.remove('d-none');
+        }
+    }
+
+    function buttonModifyVehicule(id) {
+
+        id=id.toString();
+        let sectionDisplayVehicule = document.getElementById('vehiculeDisplay'+id.toString());
+        let sectionModifyVehicule = document.getElementById('vehiculeModifyForm'+id.toString());
+                
+        if(!sectionDisplayVehicule.classList.contains('d-none')) {
+            sectionDisplayVehicule.classList.add('d-none');
+        }
+        if(sectionModifyVehicule.classList.contains('d-none')) {
+            sectionModifyVehicule.classList.remove('d-none');
+        }
+
+    }
+
+
 </script>
 {% endblock %}
 

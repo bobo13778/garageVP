@@ -33,14 +33,14 @@
                             {% if title == 'simple' %}
                                 <input type="text" class="form-control" id="subject" name="subject" required/>
                             {% else %}
-                                <input type="text" class="form-control" id="subject" name="subject" required placeholder={{title}}/>
+                                <input type="text" class="form-control" id="subject" name="subject" required placeholder="{{title}}"/>
                             {% endif %}
                         </div>
                         <div class="form-group col-12 col-md-12">
                             <label for="message"><h4>Votre message</h4></label>
                             <textarea class="form-control" id="message" name="message" required rows="4"></textarea>
                         </div>
-                        <button type="submit" class="btn mt-3 mb-3 col-3 col-md-2">Envoyer</button>
+                        <button type="submit" class="btn mt-3 mb-5 col-3 col-md-2">Envoyer</button>
                     </div>
                 </form>
             </div>

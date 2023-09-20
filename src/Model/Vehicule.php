@@ -8,7 +8,7 @@ class Vehicule extends Model
   protected string $title;
   protected string $description;
   protected float $price;
-  protected int $mainPicture;
+  protected int $mainPictureId;
   protected int $year;
   protected int $mileage;
   protected string $gearbox;
@@ -22,7 +22,7 @@ class Vehicule extends Model
   protected int $power;
   protected int $fiscalPower;
   protected int $co2Emission;
-  protected int $fuelId;
+  protected string $fuel;
 
   public function __construct()
   {
@@ -51,8 +51,8 @@ class Vehicule extends Model
     return $this->price;
   }
 
-  public function getMainPicture() : int {
-    return $this->mainPicture;
+  public function getMainPictureId() : int {
+    return $this->mainPictureId;
   }
 
   public function getYear() : int {
@@ -107,13 +107,9 @@ class Vehicule extends Model
     return $this->co2Emission;
   }
 
-  public function getFuelId() : int {
+  public function getFuel() : string {
     return $this->fuelId;
   }
-
-  //public function setId(int $id) : void {
-  //  $this->id = $id;
-  //}
 
   public function setId(int $id) : void {
     $this->id = $id;
@@ -131,8 +127,8 @@ class Vehicule extends Model
     $this->price = $price;
   }
 
-  public function setMainPicture(string $src) : void {
-    $this->mainPicture = $src;
+  public function setMainPictureId(int $mainPictureId) : void {
+    $this->mainPictureId = $mainPictureId;
   }
 
   public function setYear(int $year) : void {
@@ -187,8 +183,8 @@ class Vehicule extends Model
     $this->co2Emission = $co2Emission;
   }
 
-  public function setFuelId(int $fuelId) : void {
-    $this->fuelId = $fuelId;
+  public function setFuel(string $fuel) : void {
+    $this->fuel = $fuel;
   }
 
 

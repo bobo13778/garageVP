@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Model\Fuel;
 use App\Model\Horaire;
 use App\Model\Photo;
 use App\Model\Temoignage;
@@ -13,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EmployeePageController extends AbstractController
 {
-    //Affichage page
+    //Page principale
     #[Route('/employe', name: 'app_employee_page', methods:['GET'])]
     public function index(): Response
     {
@@ -28,6 +27,16 @@ class EmployeePageController extends AbstractController
             echo'<script>alert(\'Le temoignage a bien été publié\')</script>';
         }
 
+        if(isset($_GET['vehiculecreated']) && $_GET['vehiculecreated']){
+            echo'<script>alert(\'Nouvelle annonce enregistrée\')</script>';
+        }
+        if(isset($_GET['vehiculedeleted']) && $_GET['vehiculedeleted']){
+            echo'<script>alert(\'Annonce supprimée\')</script>';
+        }
+        if(isset($_GET['vehiculemodified']) && $_GET['vehiculemodified']){
+            echo'<script>alert(\'Annonce modifiée\')</script>';
+        }
+
         $testimonyModel = new Temoignage;
         $testimonies = $testimonyModel->findAll();
         $vehiculeModel = new Vehicule;
@@ -38,11 +47,11 @@ class EmployeePageController extends AbstractController
               $mainPicture = $photoModel->find($vehicule['mainpictureId']);
               $vehicules[$index]['mainPicture'] = $mainPicture['src'];
         }
+        $photos = $photoModel->findAll();
 
-        $fuelModel = new Fuel;
         foreach($vehicules as $index => $vehicule){
-            $fuel = $fuelModel->find($vehicule['fuelId']);
-            $vehicules[$index]['fuel'] = $fuel['type'];
+            $vehiculePhotos = $photoModel->findBy(['vehiculeId' => $vehicule['id']]);
+            $vehicules[$index]['photos'] = $vehiculePhotos;
         }
 
         foreach($testimonies as $key => $testimony) {
@@ -67,9 +76,11 @@ class EmployeePageController extends AbstractController
             'auth' => $auth,
             'testimonies' => $testimonies,
             'vehicules' => $vehicules,
-            'schedules' => $schedules
+            'schedules' => $schedules,
+            'photos' => $photos
          ]);
     }
+//CRUD temoignages
     //gestion de la création d'un témoignage
     #[Route('/employe/submittestimony', name: 'app_employee_addtestimony_page', methods:['POST'])]
     public function newTestimony() : Response
@@ -87,6 +98,10 @@ class EmployeePageController extends AbstractController
             $auth = $_SESSION['Auth'];
         } else {
             $auth = '';
+        }
+        if($auth !== 'admin' && $auth !== 'employee') {
+            header('location:./connexion');
+            exit();
         }
 
         return $this->render('employee_page/index.html.twig', [
@@ -109,7 +124,10 @@ class EmployeePageController extends AbstractController
         } else {
             $auth = '';
         }
-
+        if($auth !== 'admin' && $auth !== 'employee') {
+            header('location:./connexion');
+            exit();
+        }
         return $this->render('employee_page/index.html.twig', [
             'auth' => $auth,
          ]);
@@ -133,9 +151,188 @@ class EmployeePageController extends AbstractController
         } else {
             $auth = '';
         }
-
+        if($auth !== 'admin' && $auth !== 'employee') {
+            header('location:./connexion');
+            exit();
+        }
         return $this->render('employee_page/index.html.twig', [
             'auth' => $auth,
          ]);
     }
+
+//CRUD annonces
+
+    //gestion de l'ajout d'une annonce
+    #[Route('/employe/submitvehicule', name: 'app_employee_addvehicule_page', methods:['POST'])]
+    public function newVehicule() : Response
+    {   
+        if(isset($_POST) && !empty($_POST)) {
+
+//enregistrement de la photo dans le dossier annonces
+            $mainpicturefilename = $_FILES['mainpicture']['tmp_name'];
+            $nameToRegister = './Images/annonces/'.$_FILES['mainpicture']['name'];
+            move_uploaded_file($mainpicturefilename, $nameToRegister);
+
+//enregistrement de la photo dans la table photos
+            substr($nameToRegister, 1, 0);
+            $photoModel = new Photo;
+            $mainpictureDb = $photoModel->hydrate(['src' => $nameToRegister]);
+            $mainpictureDb->create($mainpictureDb);
+
+//enregistrement de l'id de la photo dans $_POST
+            $mainpicture = $photoModel->findBy(['src' => $nameToRegister]);
+            $_POST['mainPictureId'] = $mainpicture[0]['id'];
+
+//enregistrement de l'annonce dans la table vehicules
+            $vehicule = new Vehicule;
+            $vehicule = $vehicule->hydrate($_POST);
+            $vehicule->create($vehicule);
+
+            for ($index = 0; $index < count($_FILES['picture']['name']); $index++) {
+
+//enregistrement des photos dans le dossier annonces
+
+                $picturefilename = $_FILES['picture']['tmp_name'][$index];
+                $picnameToRegister = './Images/annonces/'.$_FILES['picture']['name'][$index];
+                move_uploaded_file($picturefilename, $picnameToRegister);
+
+//enregistrement des photos dans la table photos avec l'id du véhicule
+                substr($picnameToRegister, 1, 0);
+                $vehiculeToAttach = $vehicule->findBy(['mainPictureId' => $_POST['mainPictureId'], ]);
+                $picture = $photoModel->hydrate(['src' => $picnameToRegister, 'vehiculeId' => $vehiculeToAttach[0]['id']]);
+                $picture->create($picture);
+            }
+
+            header("location:./?vehiculecreated=true");
+            exit();
+
+        }
+        
+        if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
+            $auth = $_SESSION['Auth'];
+        } else {
+            $auth = '';
+        }
+        if($auth !== 'admin' && $auth !== 'employee') {
+            header('location:./connexion');
+            exit();
+        }
+        return $this->render('employee_page/index.html.twig', [
+            'auth' => $auth,
+
+        ]);
+    }
+
+     //gestion de la suppression d'une annonce
+     #[Route('/employe/deletevehicule', name: 'app_employee_deletevehicule_page', methods:['GET'])]
+     public function deleteVehicule() : Response
+     {   
+         if(isset($_GET['id']) && !empty($_GET['id'])) {
+             $vehiculeModel = new Vehicule();
+             $vehiculeToDelete = $vehiculeModel->find($_GET['id']);
+
+//supprime photos associées
+            $pictureModel = new Photo;
+            $picturesToDelete = $pictureModel->findBy(['vehiculeId' =>$vehiculeToDelete['id']]);
+            foreach($picturesToDelete as $picture) {
+                $pictureModel->delete($picture['id']);
+            }
+
+//supprime annonce
+            $vehiculeModel->delete($_GET['id']);
+
+//supprime mainpicture
+            $pictureModel->delete($vehiculeToDelete['mainpictureId']);
+
+            header("location:./?vehiculedeleted=true");
+            exit();
+          }
+         
+         if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
+             $auth = $_SESSION['Auth'];
+         } else {
+             $auth = '';
+         }
+         if($auth !== 'admin' && $auth !== 'employee') {
+            header('location:./connexion');
+            exit();
+        }
+         return $this->render('employee_page/index.html.twig', [
+             'auth' => $auth,
+ 
+         ]);
+     }
+
+      //gestion de la modification d'une annonce
+      #[Route('/employe/modifyvehicule', name: 'app_employee_modifyvehicule_page', methods:['POST'])]
+      public function modifyVehicule() : Response
+      {   
+        if(isset($_POST) && !empty($_POST)) {
+
+            $idVehiculeToModify = (int)$_POST['idVehiculeToModify'];
+            unset($_POST['idVehiculeToModify']);
+
+            if(isset($_FILES['mainpicture']) && $_FILES['mainpicture']['tmp_name'] !== "") {
+//enregistrement de la photo dans le dossier annonces
+                $mainpicturefilename = $_FILES['mainpicture']['tmp_name'];
+                $nameToRegister = './Images/annonces/'.$_FILES['mainpicture']['name'];
+                move_uploaded_file($mainpicturefilename, $nameToRegister);
+
+//enregistrement de la photo dans la table photos
+                substr($nameToRegister, 1, 0);
+                $photoModel = new Photo();
+                $mainpictureDb = $photoModel->hydrate(['src' => $nameToRegister]);
+                $mainpictureDb->create($mainpictureDb);
+
+//enregistrement de l'id de la photo dans $_POST
+                $mainpicture = $photoModel->findBy(['src' => $nameToRegister]);
+                $_POST['mainPictureId'] = $mainpicture[0]['id'];
+            } else unset($_POST['mainPictureId']);
+
+//enregistrement des modifications de l'annonce
+            $vehiculeModel = new Vehicule();
+            $vehiculeDatas = $vehiculeModel->hydrate($_POST);
+            $vehiculeModel->update($idVehiculeToModify, $vehiculeDatas);
+
+            if(isset($_FILES['picture']) && $_FILES['picture']['tmp_name'][0] !== "") {
+                for ($index = 0; $index < count($_FILES['picture']['name']); $index++) {
+
+//enregistrement des photos dans le dossier annonces
+                    $picturefilename = $_FILES['picture']['tmp_name'][$index];
+                    $picnameToRegister = './Images/annonces/'.$_FILES['picture']['name'][$index];
+                    move_uploaded_file($picturefilename, $picnameToRegister);
+
+//enregistrement des photos dans la table photos avec l'id du véhicule
+                    $photoModel = new Photo;
+                    substr($picnameToRegister, 1, 0);
+                    $picture = $photoModel->hydrate(['src' => $picnameToRegister, 'vehiculeId' => $idVehiculeToModify]);
+                    $picture->create($picture);
+                }
+            }
+
+//suppression des photos
+            if(isset($_POST['pictureToDelete']) && !empty($_POST['pictureToDelete'])) {
+                $pictureModel = new Photo();
+                foreach($_POST['pictureToDelete'] as $pictureToDelete) {
+                    $pictureModel->delete((int)$pictureToDelete);
+                }
+            }
+            header("location:./?vehiculemodified=true");
+            exit();
+        }   
+          
+        if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
+              $auth = $_SESSION['Auth'];
+        } else {
+            $auth = '';
+        }
+        if($auth !== 'admin' && $auth !== 'employee') {
+            header('location:./connexion');
+            exit();
+        }
+        return $this->render('employee_page/index.html.twig', [
+            'auth' => $auth,
+  
+        ]);
+      }
 }

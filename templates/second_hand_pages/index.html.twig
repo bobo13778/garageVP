@@ -7,11 +7,54 @@
 {% block body %}
 <div class="container-fluid">
   <div class="row">
-    Filtres
+
+    <div class="col-12 col-md-4 shadow">
+      <div class="row">
+        <h3 class="col-12 text-center">Kilométrage :</h3>
+        <div class="col-6 text-center">
+          <h4>Min : <span id="minval-mileage"> km</span></h4>
+          <input id="input-min-mileage" type="range" min="1" max ="250000" value ="1">
+        </div>
+        <div class="col-6 text-center">
+          <h4>Max : <span id="maxval-mileage"> km</span></h4>
+          <input id="input-max-mileage" type="range" min="1" max ="250000" value ="250000">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4 shadow">
+      <div class="row">
+        <h3 class="col-12 text-center">Prix :</h3>
+        <div class="col-6 text-center">
+          <h4>Min : <span id="minval-price"> €</span></h4>
+          <input id="input-min-price" type="range" min="1" max ="150000" value ="1">
+        </div>
+        <div class="col-6 text-center">
+          <h4>Max : <span id="maxval-price"> €</span></h4>
+          <input id="input-max-price" type="range" min="1" max ="150000" value ="150000">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4 shadow">
+      <div class="row">
+        <h3 class="col-12 text-center">Année :</h3>
+        <div class="col-6 text-center">
+          <h4>Min : <span id="minval-year"></span></h4>
+          <input id="input-min-year" type="range" min="1900" max ="2023" value ="1900">
+        </div>
+        <div class="col-6 text-center">
+          <h4>Max : <span id="maxval-year"></span></h4>
+          <input id="input-max-year" type="range" min="1900" max ="2023" value ="2023">
+        </div>
+      </div>
+    </div>
   </div>
+
+{# affichage des annonces #}
   <div class="row">
     {% for vehicule in vehicules %}
-      <div class="card" style="width: 18rem;">
+      <div class="card cardsToDisplay" style="width: 18rem;">
         <img class="card-img-top" src={{vehicule.mainPicture}} alt="Photo"/>
         <div class="card-body">
           <h5 class="card-title">{{vehicule.title}}</h5>
@@ -24,10 +67,73 @@
           <a href="./occasiondetail{{vehicule.id}}" class ="btn">En savoir plus</a>
         </div>
       </div>
-    {% endfor %}
+     {% endfor %}
   </div>
 </div>
+
+
+<script>
+
+let inputMinMileage = document.getElementById('input-min-mileage');
+let inputMaxMileage = document.getElementById('input-max-mileage');
+let minValMileage = document.getElementById('minval-mileage');
+let maxValMileage = document.getElementById('maxval-mileage');
+
+let inputMinPrice = document.getElementById('input-min-price');
+let inputMaxPrice = document.getElementById('input-max-price');
+let minValPrice = document.getElementById('minval-price');
+let maxValPrice = document.getElementById('maxval-price');
+
+let inputMinYear = document.getElementById('input-min-year');
+let inputMaxYear = document.getElementById('input-max-year');
+let minValYear = document.getElementById('minval-year');
+let maxValYear = document.getElementById('maxval-year');
+
+let cardsToDisplay = document.getElementsByClassName('cardsToDisplay')
+
+function setMinValueMileage() {
+  let value = this.value;
+  minValMileage.innerHTML = this.value.toString()+' km';
+}
+
+function setMaxValueMileage() {
+  let value = this.value;
+  maxValMileage.innerHTML = this.value.toString()+' km';
+}
+
+function setMinValuePrice() {
+  let value = this.value;
+  minValPrice.innerHTML = this.value.toString()+' €';
+}
+
+function setMaxValuePrice() {
+  let value = this.value;
+  maxValPrice.innerHTML = this.value.toString()+' €';
+}
+
+function setMinValueYear() {
+  let value = this.value;
+  minValYear.innerHTML = this.value.toString();
+}
+
+function setMaxValueYear() {
+  let value = this.value;
+  maxValYear.innerHTML = this.value.toString();
+}
+
+inputMinMileage.addEventListener('input', setMinValueMileage);
+inputMaxMileage.addEventListener('input', setMaxValueMileage);
+
+inputMinPrice.addEventListener('input', setMinValuePrice);
+inputMaxPrice.addEventListener('input', setMaxValuePrice);
+
+inputMinYear.addEventListener('input', setMinValueYear);
+inputMaxYear.addEventListener('input', setMaxValueYear);
+
+</script>
 {% endblock %}
+
+
 
 {% block schedule %}
   {% include './_schedule_template.html.twig' with {'schedules': schedules} %}
