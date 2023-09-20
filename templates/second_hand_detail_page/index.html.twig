@@ -30,23 +30,25 @@
     </div>
   </div>
 </div>
-<h2>{{vehicule.price}} €</h2>
-<span>{{vehicule.description}}</span>
-<span>Année : {{vehicule.year}}</span>
-<span>{{vehicule.fuel}}</span>
-<span>{{vehicule.mileage}} km</span>
-<span>{{vehicule.gearbox}}</span>
-<span>Couleur : {{vehicule.color}}</span>
-<span>{{vehicule.doors}} portes</span>
-<span>{{vehicule.seats}} places</span>
-<span>Puissance : {{vehicule.power}} ch</span>
-<span>Puissance fiscale : {{vehicule.fiscalPower}} ch</span>
-<span>Hauteur : {{vehicule.height}} m</span>
-<span>Largeur : {{vehicule.width}} m</span>
-<span>Longueur : {{vehicule.length}} m</span>
-<span>Emission de CO2 : {{vehicule.co2Emission}} g/km</span>
-<span>Volume du coffre : {{vehicule.trunkVolume}} l</span>
-<a href="./contact?annonce={{vehicule.id}}" class ="btn">Nous contacter pour cette annonce</a>
+<div>
+  <h2>{{vehicule.price}} €</h2>
+  <p>{{vehicule.description}}</p>
+  <p>Année : {{vehicule.year}}</p>
+  <p>{{vehicule.fuel}}</p>
+  <p>{{vehicule.mileage}} km</p>
+  <p>{{vehicule.gearbox}}</p>
+  <p>Couleur : {{vehicule.color}}</p>
+  <p>{{vehicule.doors}} portes</p>
+  <p>{{vehicule.seats}} places</p>
+  <p>Puissance : {{vehicule.power}} ch</p>
+  <p>Puissance fiscale : {{vehicule.fiscalPower}} ch</p>
+  <p>Hauteur : {{vehicule.height}} m</p>
+  <p>Largeur : {{vehicule.width}} m</p>
+  <p>Longueur : {{vehicule.length}} m</p>
+  <p>Emission de CO2 : {{vehicule.co2Emission}} g/km</p>
+  <p>Volume du coffre : {{vehicule.trunkVolume}} l</p>
+  <a href="./contact?annonce={{vehicule.id}}" class ="btn mb-5">Nous contacter pour cette annonce</a>
+</div
 {% endblock %}
 
 {% block schedule %}
