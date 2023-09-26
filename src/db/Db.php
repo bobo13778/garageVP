@@ -12,14 +12,14 @@ class Db extends PDO
   private const DBUSER = 'fjxyfnxdzmuwdj';
   private const DBPASS = '26f090c710ed7ed89a400c8433ba8d2272edf04902e834f19ba9c7bf54514dab';
   private const DBNAME = 'dbdaoklro3jdmt';
+  private const DBPORT = '5432';
 
   private function __construct()
   {
-    $dsn ='mysql:dbname='.self::DBNAME.';host='.self::DBHOST;
+    $dsn ='pgsql:host='.self::DBHOST.';port='.self::DBPORT.';dbname='.self::DBNAME.';user='.self::DBUSER.';password='.self::DBPASS;
 
     try{
-      parent::__construct($dsn, self::DBUSER, self::DBPASS);
-      $this->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES utf8');
+      parent::__construct($dsn);
       $this->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
       $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
