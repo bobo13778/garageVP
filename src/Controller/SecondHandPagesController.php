@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+session_start();
 use App\Model\Horaire;
 use App\Model\Photo;
 use App\Model\Vehicule;
@@ -19,8 +19,8 @@ class SecondHandPagesController extends AbstractController
 
         $photoModel = new Photo;
         foreach($vehicules as $index => $vehicule){
-              $mainPicture = $photoModel->find($vehicule['mainpictureId']);
-              $vehicules[$index]['mainPicture'] = $mainPicture['src'];
+              $mainPicture = $photoModel->find($vehicule['mainpictureid']);
+              $vehicules[$index]['mainpicture'] = $mainPicture['src'];
         }
 
         $scheduleModel = new Horaire;

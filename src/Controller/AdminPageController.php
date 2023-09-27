@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+session_start();
 use App\Model\Employe;
 use App\Model\Horaire;
 use App\Model\Service;
@@ -261,20 +261,20 @@ class AdminPageController extends AbstractController
             for($count=1; $count<8; $count++) {
                 $datas = [
                     'day' => $_POST['day'.$count],
-                    'morningStart' => date('H:i:s', strtotime($_POST['morningStart'.$count])),
-                    'morningEnd' => date('H:i:s', strtotime($_POST['morningEnd'.$count])),
-                    'afternoonStart' => date('H:i:s', strtotime($_POST['afternoonStart'.$count])),
-                    'afternoonEnd' => date('H:i:s', strtotime($_POST['afternoonEnd'.$count]))
+                    'morningstart' => date('H:i:s', strtotime($_POST['morningstart'.$count])),
+                    'morningend' => date('H:i:s', strtotime($_POST['morningend'.$count])),
+                    'afternoonstart' => date('H:i:s', strtotime($_POST['afternoonstart'.$count])),
+                    'afternoonend' => date('H:i:s', strtotime($_POST['afternoonend'.$count]))
                 ];
-                if(isset($_POST['morningIsClosed'.$count])) {
-                    $datas['morningIsClosed'] = $_POST['morningIsClosed'.$count];
+                if(isset($_POST['morningisclosed'.$count])) {
+                    $datas['morningisclosed'] = $_POST['morningisclosed'.$count];
                 } else {
-                    $datas['morningIsClosed'] = '';
+                    $datas['morningisclosed'] = '';
                 }
-                if(isset($_POST['afternoonIsClosed'.$count])) {
-                    $datas['afternoonIsClosed'] = $_POST['afternoonIsClosed'.$count];
+                if(isset($_POST['afternoonisclosed'.$count])) {
+                    $datas['afternoonisclosed'] = $_POST['afternoonisclosed'.$count];
                 } else {
-                    $datas['afternoonIsClosed'] = '';
+                    $datas['afternoonisclosed'] = '';
                 }
                 $scheduleDatas = $scheduleModel->hydrate($datas);
                 $scheduleModel->update($count, $scheduleDatas);

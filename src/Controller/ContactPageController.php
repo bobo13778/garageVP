@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+session_start();
 use App\Model\Horaire;
 use App\Model\MessageContact;
 use App\Model\Vehicule;

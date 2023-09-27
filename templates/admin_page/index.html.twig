@@ -153,16 +153,16 @@
                             {% for schedule in schedules %}
                                 <tr>
                                     <th scope="row">{{schedule.day}}</td>
-                                    <td>{{schedule.morningStart}}</td>
-                                    <td>{{schedule.morningEnd}}</td>
-                                    {% if schedule.morningIsClosed %}
+                                    <td>{{schedule.morningstart}}</td>
+                                    <td>{{schedule.morningend}}</td>
+                                    {% if schedule.morningisclosed == '1'%}
                                         <td><input type="checkbox" checked/></td>
                                     {% else %}
                                         <td><input type="checkbox"/></td>
                                     {% endif %}
-                                    <td>{{schedule.afternoonStart}}</td>
-                                    <td>{{schedule.afternoonEnd}}</td>
-                                    {% if schedule.afternoonIsClosed %}
+                                    <td>{{schedule.afternoonstart}}</td>
+                                    <td>{{schedule.afternoonend}}</td>
+                                    {% if schedule.afternoonisclosed == '1' %}
                                         <td><input type="checkbox" checked/></td>
                                     {% else %}
                                         <td><input type="checkbox"/></td>

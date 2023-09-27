@@ -24,7 +24,7 @@
 {# affichage des temoignages à valider #}
             <div id="toValidate" class="col-12 col-md-4">
                 {% for testimony in testimonies %}
-                    {% if testimony.toValidate == '1' %}
+                    {% if testimony.tovalidate == '1' %}
                         <div class="shadow pt-2 pb-2 mb-2">
                             <div class="row ps-2">
                                 <span>
@@ -59,7 +59,7 @@
 {# affichage des témoignages validés #}
             <div id="published" class="col-12 col-md-3 d-none">
                 {% for testimony in testimonies %}
-                    {% if testimony.toValidate != '1' %}
+                    {% if testimony.tovalidate != '1' %}
                         <div class="shadow pt-2 pb-2 mb-2">
                             <div class="row ps-2">
                                 <span>
@@ -116,7 +116,7 @@
 
 {# affichage des annonces #}
                         <div id="vehiculeDisplay{{vehicule.id}}" class="card" style="width: 18rem;">
-                            <img class="card-img-top" src={{vehicule.mainPicture}} alt="Photo"/>
+                            <img class="card-img-top" src={{vehicule.mainpicture}} alt="Photo"/>
                             <div class="card-body">
                                 <h5 class="card-title">{{vehicule.title}}</h5>
                                 <p class="card-text">

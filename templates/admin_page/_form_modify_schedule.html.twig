@@ -23,19 +23,19 @@
           {% for schedule in schedules %}
               <tr>
                   <th scope="row"><input type="text" name="day{{schedule.id}}" required value="{{schedule.day}}"/></td>
-                  <td><input type="time" name="morningStart{{schedule.id}}" required value="{{schedule.morningStart}}"/></td>
-                  <td><input type="time" name="morningEnd{{schedule.id}}" required value="{{schedule.morningEnd}}"/></td>
-                  {% if schedule.morningIsClosed %}
-                      <td><input type="checkbox" name="morningIsClosed{{schedule.id}}" value="1" checked/></td>
+                  <td><input type="time" name="morningstart{{schedule.id}}" required value="{{schedule.morningstart}}"/></td>
+                  <td><input type="time" name="morningend{{schedule.id}}" required value="{{schedule.morningend}}"/></td>
+                  {% if schedule.morningisclosed %}
+                      <td><input type="checkbox" name="morningisclosed{{schedule.id}}" value="1" checked/></td>
                   {% else %}
-                      <td><input type="checkbox" name="morningIsClosed{{schedule.id}}" value="1"/></td>
+                      <td><input type="checkbox" name="morningisclosed{{schedule.id}}" value="1"/></td>
                   {% endif %}
-                  <td><input type="time" name="afternoonStart{{schedule.id}}" required value="{{schedule.afternoonStart}}"/></td>
-                  <td><input type="time" name="afternoonEnd{{schedule.id}}" required value="{{schedule.afternoonEnd}}"/></td>
-                  {% if schedule.afternoonIsClosed %}
-                      <td><input type="checkbox" name="afternoonIsClosed{{schedule.id}}" value="1" checked/></td>
+                  <td><input type="time" name="afternoonstart{{schedule.id}}" required value="{{schedule.afternoonstart}}"/></td>
+                  <td><input type="time" name="afternoonend{{schedule.id}}" required value="{{schedule.afternoonend}}"/></td>
+                  {% if schedule.afternoonisclosed %}
+                      <td><input type="checkbox" name="afternoonisclosed{{schedule.id}}" value="1" checked/></td>
                   {% else %}
-                      <td><input type="checkbox" name="afternoonIsClosed{{schedule.id}}" value="1"/></td>
+                      <td><input type="checkbox" name="afternoonisclosed{{schedule.id}}" value="1"/></td>
                   {% endif %}
               </tr>
           {% endfor %}

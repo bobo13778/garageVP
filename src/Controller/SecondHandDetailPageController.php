@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+session_start();
 use App\Model\Horaire;
 use App\Model\Photo;
 use App\Model\Vehicule;
@@ -28,8 +28,8 @@ class SecondHandDetailPageController extends AbstractController
         $vehicule = $vehiculeModel->find($routeParams['page']);
 
         $photoModel = new Photo;
-        $photos = $photoModel->findBy(['vehiculeId' => $vehicule['id']]);
-        $photo1 = $photoModel->find($vehicule['mainpictureId']);
+        $photos = $photoModel->findBy(['vehiculeid' => $vehicule['id']]);
+        $photo1 = $photoModel->find($vehicule['mainpictureid']);
         foreach($photos as $index => $photo) {
             if($photo['id'] === $photo1['id']) {
                unset($photos[$index]);

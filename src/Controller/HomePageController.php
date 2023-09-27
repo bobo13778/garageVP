@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+session_start();
 use App\Model\Horaire;
 use App\Model\Service;
 use App\Model\Temoignage;
@@ -23,25 +23,18 @@ class HomePageController extends AbstractController
         $testimonyModel = new Temoignage;
         $testimonies = $testimonyModel->findAll();
         foreach($testimonies as $key => $testimony) {
-            $testimonies[$key]['date'] = date("d/m/Y", strtotime($testimony['createdAt']));
-            $testimonies[$key]['time'] = date("H:m", strtotime($testimony['createdAt']));
+            $testimonies[$key]['date'] = date("d/m/Y", $testimony['createdAt']);
+            $testimonies[$key]['time'] = date("H:m", $testimony['createdAt']);
         }
         $scheduleModel = new Horaire;
         $schedules = $scheduleModel->findAll();
-
-        foreach($schedules as $index => $schedule) {
-            $format ="H:i";
-            $schedules[$index]['morningstart'] = date($format, $schedule['morningstart']);
-            $schedules[$index]['morningend'] = date($format, $schedule['morningend']);
-            $schedules[$index]['afternoonstart'] = date($format, $schedule['afternoonstart']);
-            $schedules[$index]['afternoonend'] = date($format, $schedule['afternoonend']);
-        }
 
         if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
             $auth = $_SESSION['Auth'];
         } else {
             $auth = '';
         }
+
         return $this->render('homepage/index.html.twig', [
             'services' => $services,
             'testimonies' => $testimonies,

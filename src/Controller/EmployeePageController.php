@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+session_start();
 use App\Model\Horaire;
 use App\Model\Photo;
 use App\Model\Temoignage;
@@ -44,19 +44,19 @@ class EmployeePageController extends AbstractController
        
         $photoModel = new Photo;
         foreach($vehicules as $index => $vehicule){
-              $mainPicture = $photoModel->find($vehicule['mainpictureId']);
-              $vehicules[$index]['mainPicture'] = $mainPicture['src'];
+              $mainPicture = $photoModel->find($vehicule['mainpictureid']);
+              $vehicules[$index]['mainpicture'] = $mainPicture['src'];
         }
         $photos = $photoModel->findAll();
 
         foreach($vehicules as $index => $vehicule){
-            $vehiculePhotos = $photoModel->findBy(['vehiculeId' => $vehicule['id']]);
+            $vehiculePhotos = $photoModel->findBy(['vehiculeid' => $vehicule['id']]);
             $vehicules[$index]['photos'] = $vehiculePhotos;
         }
 
         foreach($testimonies as $key => $testimony) {
-            $testimonies[$key]['date'] = date("d/m/Y", strtotime($testimony['createdAt']));
-            $testimonies[$key]['time'] = date("H:m", strtotime($testimony['createdAt']));
+            $testimonies[$key]['date'] = date("d/m/Y", $testimony['createdAt']);
+            $testimonies[$key]['time'] = date("H:m", $testimony['createdAt']);
         }
         
         $scheduleModel = new Horaire;
@@ -181,7 +181,7 @@ class EmployeePageController extends AbstractController
 
 //enregistrement de l'id de la photo dans $_POST
             $mainpicture = $photoModel->findBy(['src' => $nameToRegister]);
-            $_POST['mainPictureId'] = $mainpicture[0]['id'];
+            $_POST['mainpictureid'] = $mainpicture[0]['id'];
 
 //enregistrement de l'annonce dans la table vehicules
             $vehicule = new Vehicule;
@@ -198,8 +198,8 @@ class EmployeePageController extends AbstractController
 
 //enregistrement des photos dans la table photos avec l'id du véhicule
                 substr($picnameToRegister, 1, 0);
-                $vehiculeToAttach = $vehicule->findBy(['mainPictureId' => $_POST['mainPictureId'], ]);
-                $picture = $photoModel->hydrate(['src' => $picnameToRegister, 'vehiculeId' => $vehiculeToAttach[0]['id']]);
+                $vehiculeToAttach = $vehicule->findBy(['mainpictureid' => $_POST['mainpictureid'], ]);
+                $picture = $photoModel->hydrate(['src' => $picnameToRegister, 'vehiculeid' => $vehiculeToAttach[0]['id']]);
                 $picture->create($picture);
             }
 
@@ -233,7 +233,7 @@ class EmployeePageController extends AbstractController
 
 //supprime photos associées
             $pictureModel = new Photo;
-            $picturesToDelete = $pictureModel->findBy(['vehiculeId' =>$vehiculeToDelete['id']]);
+            $picturesToDelete = $pictureModel->findBy(['vehiculeid' =>$vehiculeToDelete['id']]);
             foreach($picturesToDelete as $picture) {
                 $pictureModel->delete($picture['id']);
             }
@@ -242,7 +242,7 @@ class EmployeePageController extends AbstractController
             $vehiculeModel->delete($_GET['id']);
 
 //supprime mainpicture
-            $pictureModel->delete($vehiculeToDelete['mainpictureId']);
+            $pictureModel->delete($vehiculeToDelete['mainpictureid']);
 
             header("location:./?vehiculedeleted=true");
             exit();
@@ -286,8 +286,8 @@ class EmployeePageController extends AbstractController
 
 //enregistrement de l'id de la photo dans $_POST
                 $mainpicture = $photoModel->findBy(['src' => $nameToRegister]);
-                $_POST['mainPictureId'] = $mainpicture[0]['id'];
-            } else unset($_POST['mainPictureId']);
+                $_POST['mainpictureid'] = $mainpicture[0]['id'];
+            } else unset($_POST['mainpictureid']);
 
 //enregistrement des modifications de l'annonce
             $vehiculeModel = new Vehicule();
@@ -305,7 +305,7 @@ class EmployeePageController extends AbstractController
 //enregistrement des photos dans la table photos avec l'id du véhicule
                     $photoModel = new Photo;
                     substr($picnameToRegister, 1, 0);
-                    $picture = $photoModel->hydrate(['src' => $picnameToRegister, 'vehiculeId' => $idVehiculeToModify]);
+                    $picture = $photoModel->hydrate(['src' => $picnameToRegister, 'vehiculeid' => $idVehiculeToModify]);
                     $picture->create($picture);
                 }
             }
