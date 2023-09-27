@@ -29,6 +29,14 @@ class HomePageController extends AbstractController
         $scheduleModel = new Horaire;
         $schedules = $scheduleModel->findAll();
 
+        foreach($schedules as $index => $schedule) {
+            $format ="H:i";
+            $schedules[$index]['morningstart'] = date($format, $schedule['morningstart']);
+            $schedules[$index]['morningend'] = date($format, $schedule['morningend']);
+            $schedules[$index]['afternoonstart'] = date($format, $schedule['afternoonstart']);
+            $schedules[$index]['afternoonend'] = date($format, $schedule['afternoonend']);
+        }
+
         if(isset($_SESSION) && !empty($_SESSION['Auth'])) {
             $auth = $_SESSION['Auth'];
         } else {
