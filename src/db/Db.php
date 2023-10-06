@@ -8,10 +8,10 @@ use PDOException;
 class Db extends PDO
 {
   private static $instance;
-  private const DBHOST = 'ec2-3-210-173-88.compute-1.amazonaws.com';
-  private const DBUSER = 'fjxyfnxdzmuwdj';
-  private const DBPASS = '26f090c710ed7ed89a400c8433ba8d2272edf04902e834f19ba9c7bf54514dab';
-  private const DBNAME = 'dbdaoklro3jdmt';
+  private const DBHOST = 'ec2-3-212-29-93.compute-1.amazonaws.com';
+  private const DBUSER = 'hsagzmcpioofrn';
+  private const DBPASS = '1caccba27394ffcf43777bd95e1e38b7601ac9ff8276a3576965bf522d6dbeae';
+  private const DBNAME = 'd7h5ukqlddc08l';
   private const DBPORT = '5432';
 
   private function __construct()
