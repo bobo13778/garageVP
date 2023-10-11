@@ -55,8 +55,8 @@ class EmployeePageController extends AbstractController
         }
 
         foreach($testimonies as $key => $testimony) {
-            $testimonies[$key]['date'] = date("d/m/Y", $testimony['createdAt']);
-            $testimonies[$key]['time'] = date("H:m", $testimony['createdAt']);
+            $testimonies[$key]['date'] = date("d/m/Y", strtotime($testimony['createdat']));
+            $testimonies[$key]['time'] = date("H:m", strtotime($testimony['createdat']));
         }
         
         $scheduleModel = new Horaire;
