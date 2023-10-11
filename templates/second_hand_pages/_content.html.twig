@@ -1,0 +1,15 @@
+    {% for vehicule in vehicules %}
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src={{vehicule.mainpicture}} alt="Photo"/>
+        <div class="card-body">
+          <h5 class="card-title">{{vehicule.title}}</h5>
+          <p class="card-text">
+          <span>Année : {{vehicule.year}}</span></br>
+          <span>{{vehicule.fuel}}</span></br>
+          <span>{{vehicule.mileage}} km</span></br>
+          <span><strong>{{vehicule.price}} €</strong></span>
+          </p>
+          <a href="./occasiondetail{{vehicule.id}}" class ="btn">En savoir plus</a>
+        </div>
+      </div>
+     {% endfor %}
