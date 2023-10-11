@@ -24,7 +24,7 @@ class SecondHandPagesController extends AbstractController
               $mainPicture = $photoModel->find($vehicule['mainpictureid']);
               $vehicules[$index]['mainpicture'] = $mainPicture['src'];
         }
-        // gestion des filtres en ajax
+// gestion des filtres en ajax JS
         if(isset($_GET['filter'])) {
 
             $minMileageFilter = (int)$_GET['minMileageFilter'];

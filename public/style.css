@@ -1,31 +1,31 @@
 @font-face {
   font-family: 'Heebo';
-  src: url('./font/Heebo-Regular.ttf') format('truetype');
+  src: url('./Font/Heebo-Regular.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Heebo-Bold';
-  src: url('./font/Heebo-Bold.ttf') format('truetype');
+  src: url('./Font/Heebo-Bold.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Arvo';
-  src: url('./font/Arvo-Regular.ttf') format('truetype');
+  src: url('./Font/Arvo-Regular.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Arvo-Bold';
-  src: url('./font/Arvo-Bold.ttf') format('truetype');
+  src: url('./Font/Arvo-Bold.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Arvo-Bolditalic';
-  src: url('./font/Arvo-BoldItalic.ttf') format('truetype');
+  src: url('./Font/Arvo-BoldItalic.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Arvo-italic';
-  src: url('./font/Arvo-Italic.ttf') format('truetype');
+  src: url('./Font/Arvo-Italic.ttf') format('truetype');
 }
 
 body {
