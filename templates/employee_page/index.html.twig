@@ -34,7 +34,21 @@
                                     <strong>Message : </strong>{{testimony.content}}
                                 </span></br>
                                 <span>
-                                    <strong>Note : </strong>{{testimony.grade}}
+                                    <strong>Note : </strong>              
+                                    <p>
+                                        {% for i in 1..testimony.grade %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="yellow" stroke="black" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                        </svg>
+                                        {% endfor %}
+                                        {% if testimony.grade < 5 %}
+                                        {% for i in testimony.grade +1..5 %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="black" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </p>
                                 </span>
                                 <span>
                                     <strong>Déposé le : </strong>{{testimony.date}} à {{testimony.time}}
@@ -57,7 +71,7 @@
             </div>
 
 {# affichage des témoignages validés #}
-            <div id="published" class="col-12 col-md-3 d-none">
+            <div id="published" class="col-12 col-md-4 d-none">
                 {% for testimony in testimonies %}
                     {% if testimony.tovalidate != '1' %}
                         <div class="shadow pt-2 pb-2 mb-2">
@@ -69,7 +83,21 @@
                                     <strong>Message : </strong>{{testimony.content}}
                                 </span></br>
                                 <span>
-                                    <strong>Note : </strong>{{testimony.grade}}
+                                    <strong>Note : </strong>
+                                    <p>
+                                        {% for i in 1..testimony.grade %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="yellow" stroke="black" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                        </svg>
+                                        {% endfor %}
+                                        {% if testimony.grade < 5 %}
+                                        {% for i in testimony.grade +1..5 %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="black" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </p>
                                 </span>
                                 <span>
                                     <strong>Déposé le : </strong>{{testimony.date}} à {{testimony.time}}
@@ -78,7 +106,7 @@
 
 {# bouton de suppression d'un témoignage publié #}
                             <div class="row justify-content-around mt-3 mb-3">
-                                <a href="./employe/deletetestimony?id={{testimony.id}}" class="btn col-3">Supprimer</a>
+                                <a href="./employe/deletetestimony?id={{testimony.id}}" class="btn col-4">Supprimer</a>
                             </div>
                         </div>
                     {% endif %}
