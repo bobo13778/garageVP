@@ -1,25 +1,25 @@
 <div class="container-fluid">
-  <p>
+
     <a class="link" data-bs-toggle="collapse" data-bs-target="#collapseSchedule" role="button" aria-expanded="false" aria-controls="collapseExample">
       Horaires
     </a>
-  </p>
+
   <div class="collapse" id="collapseSchedule">
     <ul class="list-unstyled">
       {% for schedule in schedules %}
         <li>
           <p class="row">
-            <strong class="col-3">{{schedule.day}} :</strong>
+            <strong class="col-4">{{schedule.day}} :</strong>
             {% if schedule.morningisclosed == "1" %}
               {% if schedule.afternoonisclosed == "1" %}
-                <p class="col-9">Fermé</p>
+                <span class="col-8">Fermé</span>
               {% else %}
-                <p class="col-9">Ouvert de {{schedule.afternoonstart}} à {{schedule.afternoonend}}</p>
+                <span class="col-8">Ouvert de {{schedule.afternoonstart|date("H:i")}} à {{schedule.afternoonend|date("H:i")}}</span>
               {% endif %}
             {% elseif schedule.afternoonisclosed == "1" %}
-            <p class="col-9">Ouvert de {{schedule.morningstart}} à {{schedule.morningend}}</p>
+            <span class="col-8">Ouvert de {{schedule.morningstart|date("H:i")}} à {{schedule.morningend|date("H:i")}}</span>
             {% else %}
-            <p class="col-9">Ouvert de {{schedule.morningstart}} à {{schedule.morningend}} et de {{schedule.afternoonstart}} à {{schedule.afternoonend}}</p>
+            <span class="col-8">Ouvert de {{schedule.morningstart|date("H:i")}} à {{schedule.morningend|date("H:i")}} et de {{schedule.afternoonstart|date("H:i")}} à {{schedule.afternoonend|date("H:i")}}</span>
             {% endif %}
           </p>
         </li>

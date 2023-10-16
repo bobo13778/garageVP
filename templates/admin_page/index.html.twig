@@ -8,16 +8,18 @@
 
 {% block body %}
 {# Navigation version mobile #}
-<div class="d-md-none">
-    <h2 id="mainTitle">Employés</h2>
-    <div>
-        <button id="employeeBtn" class="btn" onclick="buttonClicked('Employés')" disabled>Employés</button>
-        <button id="serviceBtn" class="btn" onclick="buttonClicked('Service')">Services</button>
-        <button id="scheduleBtn" class="btn" onclick="buttonClicked('Horaires')">Horaires</button>
+<div class="d-md-none mt-3">
+    <h2 id="mainTitle" class="deep-green-text">Employés</h2>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <button id="employeeBtn" class="btn col-3 ms-1 me-1" onclick="buttonClicked('Employés')" disabled>Employés</button>
+            <button id="serviceBtn" class="btn col-3 ms-1 me-1" onclick="buttonClicked('Service')">Services</button>
+            <button id="scheduleBtn" class="btn col-3 ms-1 me-1" onclick="buttonClicked('Horaires')">Horaires</button>
+        </div>
     </div>
 </div>
 {# Contenu principal #}
-<div class="container-fluid">
+<div class="container-fluid mt-3">
     <div class="row w-100">
 
 {# Employés #}
@@ -31,7 +33,7 @@
 
 {# Affichage des employés #}
         <div id="employee" class="col-12 col-md-4 d-md-block">
-            <h2 class="text-center d-none d-md-block">Employés</h2>
+            <h2 class="text-center d-none d-md-block deep-green-text">Employés</h2>
             <div class="row justify-content-around mt-3 mb-3">
                 <button id="employeeCreateBtn" class="btn col-3" onclick="buttonCreateEmployee()">Nouveau</button>
             </div>
@@ -69,8 +71,8 @@
 
 {# Boutons de modification et de suppression des employés #}
                     <div class="row justify-content-around mt-3 mb-3">
-                        <button id="modifyEmployeeBtn" onclick="buttonModifyEmployee({{employee.id}})" class="btn col-3">Modifier</button>
-                        <a href="./admin/deleteemployee?id={{employee.id}}" class="btn col-3">Supprimer</a>
+                        <button id="modifyEmployeeBtn" onclick="buttonModifyEmployee({{employee.id}})" class="btn col-md-3 col-4">Modifier</button>
+                        <a href="./admin/deleteemployee?id={{employee.id}}" class="btn col-md-3 col-4">Supprimer</a>
                     </div>
                 </div>
             {% endfor %}
@@ -87,7 +89,7 @@
 
 {# Affichage des services #}
         <div id="service" class="col-12 col-md-4 d-none d-md-block">
-            <h2 class="text-center d-none d-md-block">Services</h2>
+            <h2 class="text-center d-none d-md-block deep-green-text">Services</h2>
             <div class="row justify-content-around mt-3 mb-3">
                 <button id="serviceCreateBtn" class="btn col-3" onclick="buttonCreateService()">Nouveau</button>
             </div>
@@ -116,60 +118,84 @@
                     </div>
 {# Boutons de modification et de suppression des services #}
                     <div class="row justify-content-around mt-3 mb-3">
-                        <button id="modifyServiceBtn" onclick="buttonModifyService({{service.id}})" class="btn col-3">Modifier</button>
-                        <a href="./admin/deleteservice?id={{service.id}}" class="btn col-3">Supprimer</a>
+                        <button id="modifyServiceBtn" onclick="buttonModifyService({{service.id}})" class="btn col-md-3 col-4">Modifier</button>
+                        <a href="./admin/deleteservice?id={{service.id}}" class="btn col-md-3 col-4">Supprimer</a>
                     </div>
                 </div>
             {% endfor %}
         </div>
 
 {# horaires #}
-        <div id="schedule" class="col-12 col-md-3 d-none d-md-block">
+        <div id="schedule" class="col-12 col-md-4 d-none d-md-block">
             <div class="row">
-                <h2 class="text-center d-none d-md-block">Horaires</h2>
+                <h2 class="text-center d-none d-md-block deep-green-text">Horaires</h2>
 
 {# affichage des horaires #}
-                <div id="scheduleDisplay" class="">
-                    <table class="table shadow">
-                        <thead>
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col" colspan='2' class="text-center">Matin</th>
-                                <th scope="col"></th>
-                                <th scope="col" colspan='2' class="text-center">Après-midi</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row"></td>
-                                <td>Ouverture</td>
-                                <td>Fermeture</td>
-                                <td>Fermé</td>
-                                <td>Ouverture</td>
-                                <td>Fermeture</td>
-                                <td>Fermé</td>
-                            </tr>
-                            {% for schedule in schedules %}
-                                <tr>
-                                    <th scope="row">{{schedule.day}}</td>
-                                    <td>{{schedule.morningstart}}</td>
-                                    <td>{{schedule.morningend}}</td>
-                                    {% if schedule.morningisclosed == '1'%}
-                                        <td><input type="checkbox" checked/></td>
-                                    {% else %}
-                                        <td><input type="checkbox"/></td>
-                                    {% endif %}
-                                    <td>{{schedule.afternoonstart}}</td>
-                                    <td>{{schedule.afternoonend}}</td>
-                                    {% if schedule.afternoonisclosed == '1' %}
-                                        <td><input type="checkbox" checked/></td>
-                                    {% else %}
-                                        <td><input type="checkbox"/></td>
-                                    {% endif %}
-                                </tr>
-                            {% endfor %}
-                    </table>
+                <div id="scheduleDisplay">
+                    <div class="row">
+                        <div class="col-2">
+                            <p></p>
+                        </div>
+                        <div class="col-5 text-center">
+                            <strong>Matin</strong>
+                        </div>
+                        <div class="col-5 text-center">
+                            <strong>Après-midi</strong>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <p></p>
+                        </div>
+                        <div class="col-2">
+                            <span class="scheduleFont">Ouverture</span>
+                        </div>
+                        <div class="col-2">
+                            <span class="scheduleFont">Fermeture</span>
+                        </div>
+                        <div class="col-1">
+                            <span class="scheduleFont">Fermé</span>
+                        </div>
+                        <div class="col-2">
+                            <span class="scheduleFont">Ouverture</span>
+                        </div>
+                        <div class="col-2">
+                            <span class="scheduleFont">Fermeture</span>
+                        </div>
+                        <div class="col-1">
+                            <span class="scheduleFont">Fermé</span>
+                        </div>
+                    </div>
+                    {% for schedule in schedules %}
+                        <div class="row">
+                            <div class="col-2">
+                                <strong class="scheduleFont">{{schedule.day}}</strong>
+                            </div>
+                            <div class="col-2">
+                                <span class="scheduleFont">{{schedule.morningstart|date("H:i")}}</span>
+                            </div>
+                            <div class="col-2">
+                                <span class="scheduleFont">{{schedule.morningend|date("H:i")}}</span>
+                            </div>
+                            {% if schedule.morningisclosed == '1'%}
+                                <span class="col-1"><input type="checkbox" checked/></span>
+                            {% else %}
+                                <span class="col-1"><input type="checkbox"/></span>
+                            {% endif %}
+                            <div class="col-2">
+                                <span class="scheduleFont">{{schedule.afternoonstart|date("H:i")}}</span>
+                            </div>
+                            <div class="col-2">
+                                <span class="scheduleFont">{{schedule.afternoonend|date("H:i")}}</span>
+                            </div>
+                            {% if schedule.afternoonisclosed == '1'%}
+                                <span class="col-1"><input type="checkbox" checked/></span>
+                            {% else %}
+                                <span class="col-1"><input type="checkbox"/></span>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
                     <div class="row justify-content-around mt-3 mb-3">
                         <button id="modifySchedule" onclick="buttonModifySchedule()" class="btn col-3">Modifier</button>
                     </div>

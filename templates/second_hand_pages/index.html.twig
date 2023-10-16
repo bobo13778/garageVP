@@ -6,45 +6,45 @@
 
 {% block body %}
 <div class="container-fluid">
-  <div class="row">
+  <div class="row justify-content-around mt-2 mb-2">
 
-    <div class="col-12 col-md-4 shadow">
+    <div class="col-12 col-md-3 shadow">
       <div class="row">
-        <h3 class="col-12 text-center">Kilométrage :</h3>
+        <h3 class="col-12 text-center deep-green-text">Kilométrage :</h3>
         <div class="col-6 text-center">
-          <h4>Min : <span id="minval-mileage">0 km</span></h4>
+          <h5>Min : <span id="minval-mileage">0 km</span></h5>
           <input id="input-min-mileage" type="range" min="0" max ="250000" value ="0" step="1000">
         </div>
         <div class="col-6 text-center">
-          <h4>Max : <span id="maxval-mileage">250000 km</span></h4>
+          <h5>Max : <span id="maxval-mileage">250000 km</span></h5>
           <input id="input-max-mileage" type="range" min="0" max ="250000" value ="250000" step="1000">
         </div>
       </div>
     </div>
 
-    <div class="col-12 col-md-4 shadow">
+    <div class="col-12 col-md-3 shadow">
       <div class="row">
-        <h3 class="col-12 text-center">Prix :</h3>
+        <h3 class="col-12 text-center deep-green-text">Prix :</h3>
         <div class="col-6 text-center">
-          <h4>Min : <span id="minval-price">0 €</span></h4>
+          <h5>Min : <span id="minval-price">0 €</span></h5>
           <input id="input-min-price" type="range" min="0" max ="100000" value ="0" step="1000">
         </div>
         <div class="col-6 text-center">
-          <h4>Max : <span id="maxval-price">100000 €</span></h4>
+          <h5>Max : <span id="maxval-price">100000 €</span></h5>
           <input id="input-max-price" type="range" min="0" max ="100000" value ="100000" step="1000">
         </div>
       </div>
     </div>
 
-    <div class="col-12 col-md-4 shadow">
+    <div class="col-12 col-md-3 shadow">
       <div class="row">
-        <h3 class="col-12 text-center">Année :</h3>
+        <h3 class="col-12 text-center deep-green-text">Année :</h3>
         <div class="col-6 text-center">
-          <h4>Min : <span id="minval-year">1900</span></h4>
+          <h5>Min : <span id="minval-year">1900</span></h5>
           <input id="input-min-year" type="range" min="1900" max ="2023" value ="1900">
         </div>
         <div class="col-6 text-center">
-          <h4>Max : <span id="maxval-year">2023</span></h4>
+          <h5>Max : <span id="maxval-year">2023</span></h5>
           <input id="input-max-year" type="range" min="1900" max ="2023" value ="2023">
         </div>
       </div>
@@ -52,7 +52,7 @@
   </div>
 
 {# affichage des annonces #}
-  <div class="row" id="filteredContent">
+  <div class="row justify-content-around" id="filteredContent">
     {% include "second_hand_pages/_content.html.twig" %}
   </div>
 </div>

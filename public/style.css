@@ -41,12 +41,29 @@ h1, h2, h3 {
   background-color : #7AE582;
 }
 
+.medium-green-text {
+  color : #7AE582;
+}
+
 .deep-green {
   background-color : #25A18E;
 }
 
+.deep-green-text {
+  color : #25A18E;
+}
+
 .light-green {
   background-color : #85FDBC;
+}
+
+.light-green-text {
+  background-color : #85FDBC;
+}
+
+.light-green-link {
+  color: #85FDBC;
+  text-decoration: none;
 }
 
 .link {
@@ -59,6 +76,11 @@ h1, h2, h3 {
   color: #F2F2F2;
 }
 
+.btn-light {
+  background-color: #85FDBC;
+  color: black;
+}
+
 .garage-picture {
     background-image: url(./Images/garage.jpg);
     height : 400px;
@@ -69,7 +91,7 @@ h1, h2, h3 {
 }
 
 .schedule {
-  font-size: 0.5 rem;
+  font-size: 0.1em;
 }
 
 .footer {
@@ -78,3 +100,13 @@ h1, h2, h3 {
   height: 60px;
 }
 
+.main-title {
+  font-size: 4em;
+  text-shadow: black 0.1em 0.1em 0.2em;
+}
+
+@media screen and (max-width: 768px) {
+  .scheduleFont {
+    font-size: 0.6rem;
+  }  
+}

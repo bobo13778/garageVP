@@ -2,53 +2,57 @@
 
 {% set userRole = auth %}
 
-{% block title %}Occasion{{vehicule.title}}{% endblock %}
+{% block title %}Occasion {{vehicule.title}}{% endblock %}
 
 {% block body %}
-<h1>{{vehicule.title}}</h1>
-<div class="row justify-content-center mh">
-  <div class="col-12 col-md-6">
-    <div id="carousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img class="d-block w-100" src={{photo1.src}} alt="First slide"/>
-        </div>
-        {% for photo in photos %}
-          <div class="carousel-item">
-            <img class="d-block w-100" src={{photo.src}} alt="slide"/>
+<div class="container-fluid">
+  <div class="row text-center justify-content-center mt-3 mb-3">
+    <h1 class="deep-green-text">{{vehicule.title}}</h1>
+    <div class="row justify-content-center mh">
+      <div class="col-12 col-md-6">
+        <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img class="d-block w-100" src={{photo1.src}} alt="First slide"/>
+            </div>
+            {% for photo in photos %}
+              <div class="carousel-item">
+                <img class="d-block w-100" src={{photo.src}} alt="slide"/>
+              </div>
+            {% endfor %}
           </div>
-        {% endfor %}
+          <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
     </div>
   </div>
+  <div>
+    <h2 class="deep-green-text">{{vehicule.price}} €</h2>
+    <h3>"{{vehicule.description}}"</h3>
+    <p><strong class="medium-green-text">Année : </strong>{{vehicule.year}}</p>
+    <p><strong class="medium-green-text">Motorisation: </strong>{{vehicule.fuel}}</p>
+    <p><strong class="medium-green-text">Kilométrage: </strong>{{vehicule.mileage}} km</p>
+    <p><strong class="medium-green-text">Boite de vitesse: </strong>{{vehicule.gearbox}}</p>
+    <p><strong class="medium-green-text">Couleur : </strong>{{vehicule.color}}</p>
+    <p><strong class="medium-green-text">Portes: </strong>{{vehicule.doors}} portes</p>
+    <p><strong class="medium-green-text">Places: </strong>{{vehicule.seats}} places</p>
+    <p><strong class="medium-green-text">Puissance : </strong>{{vehicule.power}} ch</p>
+    <p><strong class="medium-green-text">Puissance fiscale : </strong>{{vehicule.fiscalpower}} ch</p>
+    <p><strong class="medium-green-text">Hauteur : </strong>{{vehicule.height}} m</p>
+    <p><strong class="medium-green-text">Largeur : </strong>{{vehicule.width}} m</p>
+    <p><strong class="medium-green-text">Longueur : </strong>{{vehicule.length}} m</p>
+    <p><strong class="medium-green-text">Emission de CO2 : </strong>{{vehicule.co2emission}} g/km</p>
+    <p><strong class="medium-green-text">Volume du coffre : </strong>{{vehicule.trunkvolume}} l</p>
+    <a href="./contact?annonce={{vehicule.id}}" class ="btn mb-5">Nous contacter pour cette annonce</a>
+  </div>
 </div>
-<div>
-  <h2>{{vehicule.price}} €</h2>
-  <p>{{vehicule.description}}</p>
-  <p>Année : {{vehicule.year}}</p>
-  <p>{{vehicule.fuel}}</p>
-  <p>{{vehicule.mileage}} km</p>
-  <p>{{vehicule.gearbox}}</p>
-  <p>Couleur : {{vehicule.color}}</p>
-  <p>{{vehicule.doors}} portes</p>
-  <p>{{vehicule.seats}} places</p>
-  <p>Puissance : {{vehicule.power}} ch</p>
-  <p>Puissance fiscale : {{vehicule.fiscalpower}} ch</p>
-  <p>Hauteur : {{vehicule.height}} m</p>
-  <p>Largeur : {{vehicule.width}} m</p>
-  <p>Longueur : {{vehicule.length}} m</p>
-  <p>Emission de CO2 : {{vehicule.co2emission}} g/km</p>
-  <p>Volume du coffre : {{vehicule.trunkvolume}} l</p>
-  <a href="./contact?annonce={{vehicule.id}}" class ="btn mb-5">Nous contacter pour cette annonce</a>
-</div
 {% endblock %}
 
 {% block schedule %}

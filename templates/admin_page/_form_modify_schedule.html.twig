@@ -1,45 +1,71 @@
 <form class="container-fluid" method="POST" action="./admin/modifyschedule">
                    
-  <table class="table shadow">
-      <thead>
-          <tr>
-              <th scope="col"></th>
-              <th scope="col" colspan='2' class="text-center">Matin</th>
-              <th scope="col"></th>
-              <th scope="col" colspan='2' class="text-center">Après-midi</th>
-              <th scope="col"></th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr>
-              <th scope="row"></td>
-              <td>Ouverture</td>
-              <td>Fermeture</td>
-              <td>Fermé</td>
-              <td>Ouverture</td>
-              <td>Fermeture</td>
-              <td>Fermé</td>
-          </tr>
-          {% for schedule in schedules %}
-              <tr>
-                  <th scope="row"><input type="text" name="day{{schedule.id}}" required value="{{schedule.day}}"/></td>
-                  <td><input type="time" name="morningstart{{schedule.id}}" required value="{{schedule.morningstart}}"/></td>
-                  <td><input type="time" name="morningend{{schedule.id}}" required value="{{schedule.morningend}}"/></td>
-                  {% if schedule.morningisclosed %}
-                      <td><input type="checkbox" name="morningisclosed{{schedule.id}}" value="1" checked/></td>
-                  {% else %}
-                      <td><input type="checkbox" name="morningisclosed{{schedule.id}}" value="1"/></td>
-                  {% endif %}
-                  <td><input type="time" name="afternoonstart{{schedule.id}}" required value="{{schedule.afternoonstart}}"/></td>
-                  <td><input type="time" name="afternoonend{{schedule.id}}" required value="{{schedule.afternoonend}}"/></td>
-                  {% if schedule.afternoonisclosed %}
-                      <td><input type="checkbox" name="afternoonisclosed{{schedule.id}}" value="1" checked/></td>
-                  {% else %}
-                      <td><input type="checkbox" name="afternoonisclosed{{schedule.id}}" value="1"/></td>
-                  {% endif %}
-              </tr>
-          {% endfor %}
-  </table>
+  <div class="row">
+    <div class="col-2">
+        <p></p>
+    </div>
+    <div class="col-5 text-center">
+        <strong>Matin</strong>
+    </div>
+    <div class="col-5 text-center">
+        <strong>Après-midi</strong>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-2">
+        <p></p>
+    </div>
+    <div class="col-2">
+        <span class="scheduleFont">Ouverture</span>
+    </div>
+    <div class="col-2">
+        <span class="scheduleFont">Fermeture</span>
+    </div>
+    <div class="col-1">
+        <span class="scheduleFont">Fermé</span>
+    </div>
+    <div class="col-2">
+        <span class="scheduleFont">Ouverture</span>
+    </div>
+    <div class="col-2">
+        <span class="scheduleFont">Fermeture</span>
+    </div>
+    <div class="col-1">
+        <span class="scheduleFont">Fermé</span>
+    </div>
+  </div>
+  {% for schedule in schedules %}
+    <div class="row">
+        <div class="col-2">
+            <strong class="scheduleFont">{{schedule.day}}</strong>
+            <input class="scheduleFont" type="hidden" name="day{{schedule.id}}" required value="{{schedule.day}}"/>
+        </div>
+        <div class="col-2">
+            <input class="scheduleFont" type="time" name="morningstart{{schedule.id}}" required value="{{schedule.morningstart}}"/>
+        </div>
+        <div class="col-2">
+            <input class="scheduleFont" type="time" name="morningend{{schedule.id}}" required value="{{schedule.morningend}}"/>
+        </div>
+        {% if schedule.morningisclosed == '1'%}
+            <span class="col-1"><input type="checkbox" name="morningisclosed{{schedule.id}}" value="1" checked/></span>
+        {% else %}
+            <span class="col-1"><input type="checkbox" name="morningisclosed{{schedule.id}}" value="1"/></span>
+        {% endif %}
+        <div class="col-2">
+            <input class="scheduleFont" type="time" name="afternoonstart{{schedule.id}}" required value="{{schedule.afternoonstart}}"/>
+        </div>
+        <div class="col-2">
+            <input class="scheduleFont" type="time" name="afternoonend{{schedule.id}}" required value="{{schedule.afternoonend}}"/>
+        </div>
+        {% if schedule.afternoonisclosed == '1'%}
+            <span class="col-1"><input type="checkbox" name="afternoonisclosed{{schedule.id}}" value="1" checked/></span>
+        {% else %}
+            <span class="col-1"><input type="checkbox" name="afternoonisclosed{{schedule.id}}" value="1"/></span>
+        {% endif %}
+    </div>
+  {% endfor %}
+
   <button type="submit" class="btn mt-3 mb-3 col-3">Valider</button>
 
 </form>

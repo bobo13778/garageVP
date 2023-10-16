@@ -1,8 +1,8 @@
     {% for vehicule in vehicules %}
-      <div class="card" style="width: 18rem;">
+      <div class="card mb-2" style="width: 18rem;">
         <img class="card-img-top" src={{vehicule.mainpicture}} alt="Photo"/>
         <div class="card-body">
-          <h5 class="card-title">{{vehicule.title}}</h5>
+          <h5 class="card-title"><strong>{{vehicule.title}}</strong></h5>
           <p class="card-text">
           <span>Année : {{vehicule.year}}</span></br>
           <span>{{vehicule.fuel}}</span></br>

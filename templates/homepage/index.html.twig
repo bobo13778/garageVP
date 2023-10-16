@@ -9,27 +9,27 @@ Accueil
 {% block body %}
 {{parent()}}
   <div class="row garage-picture text-center align-items-center">
-    <h1>Garage V. PARROT</h1>
+    <h1 class="main-title">Garage V. PARROT</h1>
   </div>
-  <div class="row mt-2">
+  <div class="row mt-3 justify-content-between">
     <div class="col-12 col-md-8">
-      <h2>Nos services</h2>
+      <h2 class="deep-green-text">Nos services</h2>
       {% for service in services %}
-        <div class="row mb-2 shadow">
+        <div class="row mb-3 shadow">
           <img class="img-fluid col-12 col-md-4" src ={{service.picture}} alt={{service.name}}/>
           <div class="col-12 col-md-8">
-            <h3>{{service.name}}</h2>
+            <h3><strong>{{service.name}}</strong></h2>
             <p>{{service.description}}</p>
           </div>
         </div>
       {% endfor %}
     </div>
-    <div class="col-12 col-md-4 mt-2">
-      <div>
-        <h3>Votre avis nous intéresse</h3>
+    <div class="col-12 col-md-3 mt-2">
+      <div class="mb-3 shadow p-2">
+        <h2 class="deep-green-text">Votre avis nous intéresse</h2>
         {% include './homepage/_form_testimony.html.twig' %}
       </div>
-      <h3>Nos clients parlent de nous</h3>
+      <h2 class="deep-green-text">Nos clients parlent de nous</h2>
       {% for testimony in testimonies %}
         {% if testimony.tovalidate != '1' %}
           <div class="row mb-2 shadow">
