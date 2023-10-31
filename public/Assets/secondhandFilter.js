@@ -16,11 +16,17 @@ let maxYearValue= document.getElementById("maxval-year");
 minMileage.addEventListener('mouseup', () => {
   filter();
 })
+minMileage.addEventListener('touchend', () => {
+  filter();
+})
 minMileage.addEventListener('input', () => {
   minMileageValue.innerHTML = minMileage.value + " km";
 })
 
 maxMileage.addEventListener('mouseup', () => {
+  filter();
+})
+maxMileage.addEventListener('touchend', () => {
   filter();
 })
 maxMileage.addEventListener('input', () => {
@@ -30,11 +36,17 @@ maxMileage.addEventListener('input', () => {
 minPrice.addEventListener('mouseup', () => {
   filter();
 })
+minPrice.addEventListener('touchend', () => {
+  filter();
+})
 minPrice.addEventListener('input', () => {
   minPriceValue.innerHTML = minPrice.value + " €";
 })
 
 maxPrice.addEventListener('mouseup', () => {
+  filter();
+})
+maxPrice.addEventListener('touchend', () => {
   filter();
 })
 maxPrice.addEventListener('input', () => {
@@ -44,11 +56,17 @@ maxPrice.addEventListener('input', () => {
 minYear.addEventListener('mouseup', () => {
   filter();
 })
+minYear.addEventListener('touchend', () => {
+  filter();
+})
 minYear.addEventListener('input', () => {
   minYearValue.innerHTML = minYear.value;
 })
 
 maxYear.addEventListener('mouseup', () => {
+  filter();
+})
+maxYear.addEventListener('touchend', () => {
   filter();
 })
 maxYear.addEventListener('input', () => {
