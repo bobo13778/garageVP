@@ -24,7 +24,7 @@ class SecondHandPagesController extends AbstractController
               $mainPicture = $photoModel->find($vehicule['mainpictureid']);
               $vehicules[$index]['mainpicture'] = $mainPicture['src'];
         }
-// gestion des filtres en ajax JS
+// gestion des filtres en fetch JS
         if(isset($_GET['filter'])) {
 
             $minMileageFilter = (int)$_GET['minMileageFilter'];
@@ -38,7 +38,7 @@ class SecondHandPagesController extends AbstractController
             foreach($vehicules as $index => $vehicule) {
                 if(
                     $vehicule['mileage'] < $minMileageFilter || $vehicule['mileage'] > $maxMileageFilter
-                    || $vehicule['price'] < $minPriceFilter || $vehicule['mileage'] > $maxPriceFilter
+                    || $vehicule['price'] < $minPriceFilter || $vehicule['price'] > $maxPriceFilter
                     || $vehicule['year'] < $minYearFilter || $vehicule['year'] > $maxYearFilter
                 ) {
                     unset($filteredVehicules[$index]);
